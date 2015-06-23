@@ -9,14 +9,14 @@ $ npm install hexo-deployer-aws-s3 --save
 
 ## Setup
 
-We must provide 4 parameters below to the AWS SDK.
+We must provide 4 parameters to the AWS SDK.
 
 1. **accessKeyId**
 2. **secretAccessKey**
 3. **region**
 4. **bucket**
 
-You can set **region** and **bucket** in `_config.yml`
+You can provide **region** and **bucket** from `_config.yml`
 
 ``` yaml
 deploy:
@@ -25,7 +25,8 @@ deploy:
   bucket: <bucket>
 ```
 
-You can't set **accessKeyId** and **secretAccessKey** in this plugin. Instead, you can set them via global settings below.
+You can't provide **accessKeyId** and **secretAccessKey** from this plugin.
+Instead, you can provide them from global settings below.
 
 - Credentials File: `~/.aws/credentials`
 - Environment Variables: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
