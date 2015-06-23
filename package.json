@@ -1,6 +1,6 @@
 {
   "name": "hexo-deployer-aws-s3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AWS S3 deployer for Hexo.",
   "main": "index.js",
   "scripts": {
@@ -15,10 +15,21 @@
     "S3",
     "Hexo"
   ],
-  "author": "Kei Ito",
+  "author": {
+    "name": "Kei Ito"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kei-ito/hexo-deployer-aws-s3/issues"
   },
-  "homepage": "https://github.com/kei-ito/hexo-deployer-aws-s3#readme"
+  "homepage": "https://github.com/kei-ito/hexo-deployer-aws-s3#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1.35"
+  },
+  "readme": "# hexo-deployer-aws-s3\nAWS S3 deployer plugin for [Hexo].\n\n## Installation\n\n``` bash\n$ npm install hexo-deployer-aws-s3 --save\n```\n\n## Setup\n\nWe must provide 4 parameters below to the AWS SDK.\n\n1. **accessKeyId**\n2. **secretAccessKey**\n3. **region**\n4. **bucket**\n\nYou can set **region** and **bucket** in `_config.yml`\n\n``` yaml\ndeploy:\n  type: aws-s3\n  region: <region>\n  bucket: <bucket>\n```\n\nYou can't set **accessKeyId** and **secretAccessKey** in this plugin. Instead, you can set them via global settings below.\n\n- Credentials File: `~/.aws/credentials`\n- Environment Variables: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`\n\nFor more, see [Configuring the SDK in Node.js].\n\n[Hexo]: http://hexo.io/\n[Configuring the SDK in Node.js]: http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html\n\n## Usage\n\n``` bash\n$ hexo deploy\n```\n\n## License\nMIT",
+  "readmeFilename": "README.md",
+  "gitHead": "3a53e2fe4efd61328a9d5b07335fb66a3786f843",
+  "_id": "hexo-deployer-aws-s3@0.0.1",
+  "_shasum": "916dc1498bf801627e59b601f16fb863c1dff11e",
+  "_from": "hexo-deployer-aws-s3@*"
 }
