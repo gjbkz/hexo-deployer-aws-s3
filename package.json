@@ -1,6 +1,6 @@
 {
   "name": "hexo-deployer-aws-s3",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AWS S3 deployer for Hexo.",
   "main": "index.js",
   "scripts": {
