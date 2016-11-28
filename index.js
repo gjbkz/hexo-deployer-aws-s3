@@ -51,5 +51,7 @@ hexo.extend.deployer.register('aws-s3', function () {
 				});
 			});
 		}));
+	}).catch((error) => {
+		console.error(error);
 	});
 });
