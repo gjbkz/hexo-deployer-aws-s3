@@ -20,35 +20,38 @@ var callbackPromise = function (fn) {
 
 hexo.extend.deployer.register('aws-s3', function () {
 	var config = this.config;
+	var deployConfig = config.deploy instanceof Array ? config.deploy.find(function (deployConfig) {
+		return deployConfig.type === 'aws-s3';
+	}) : config.deploy;
 	var baseDir = this.base_dir;
 	var publicDir = upath.join(baseDir, config.public_dir);
 	var s3 = new AWS.S3({
-		region: config.deploy.region
+		region: deployConfig.region
 	});
 	callbackPromise(function (callback) {
-		var globOptions = config.deploy.glob || {};
+		var globOptions = deployConfig.glob || {};
 		globOptions.nodir = true;
 		glob(upath.join(publicDir, '**', '*'), globOptions, callback);
 	}).then(function (files) {
 		return Promise.all(files.map(function (filepath) {
+			var params = {
+				Bucket: deployConfig.bucket,
+				Key: upath.toUnix(upath.join(deployConfig.prefix || '', upath.relative(publicDir, filepath))),
+				ContentType: mime.lookup(filepath),
+				ACL: ACL_PUBLIC_READ
+			};
 			return callbackPromise(function (callback) {
 				fs.readFile(filepath, callback);
 			}).then(function (buffer) {
-				var params = {
-					Bucket: config.deploy.bucket,
-					Key: upath.toUnix(upath.join(config.deploy.prefix || '', upath.relative(publicDir, filepath))),
-					Body: buffer,
-					ContentType: mime.lookup(filepath),
-					ACL: ACL_PUBLIC_READ
-				};
+				params.Buffer = buffer;
 				return callbackPromise(function (callback) {
 					s3.putObject(params, callback);
-				}).then(function () {
-					console.log(`Uploaded: ${params.Key} [${params.ContentType}]`);
-				}).catch(function (error) {
-					console.error(error);
-					console.log(`Upload Failed: ${params.Key} [${params.ContentType}]`);
 				});
+			}).then(function () {
+				console.log(`Uploaded: ${params.Key} [${params.ContentType}]`);
+			}).catch(function (error) {
+				console.error(error);
+				console.log(`Upload Failed: ${params.Key} [${params.ContentType}]`);
 			});
 		}));
 	}).catch((error) => {
