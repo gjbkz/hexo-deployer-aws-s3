@@ -1,5 +1,8 @@
 # hexo-deployer-aws-s3
+
 AWS S3 deployer plugin for [Hexo].
+
+[![Build Status](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3)
 
 ## Installation
 
