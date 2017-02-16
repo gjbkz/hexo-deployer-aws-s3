@@ -1,28 +1,29 @@
 {
-	"name": "hexo-deployer-aws-s3",
-	"version": "0.1.4",
-	"description": "AWS S3 deployer for Hexo.",
-	"main": "index.js",
-	"repository": {
-		"type": "git",
-		"url": "git+ssh://git@github.com/kei-ito/hexo-deployer-aws-s3.git"
-	},
-	"keywords": [
-		"AWS",
-		"S3",
-		"Hexo"
-	],
-	"author": {
-		"name": "Kei Ito"
-	},
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/kei-ito/hexo-deployer-aws-s3/issues"
-	},
-	"dependencies": {
-		"aws-sdk": "^2.1.35",
-		"glob": "^7.1.1",
-		"mime": "^1.3.4",
-		"upath": "^0.1.6"
-	}
+  "name": "hexo-deployer-aws-s3",
+  "version": "0.1.4",
+  "description": "AWS S3 deployer for Hexo.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kei-ito/hexo-deployer-aws-s3.git"
+  },
+  "keywords": [
+    "AWS",
+    "S3",
+    "Hexo"
+  ],
+  "author": {
+    "name": "Kei Ito"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kei-ito/hexo-deployer-aws-s3/issues"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1.35",
+    "bluebird": "^3.4.7",
+    "glob": "^7.1.1",
+    "mime": "^1.3.4",
+    "upath": "^0.1.6"
+  }
 }
