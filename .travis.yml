@@ -1,6 +1,12 @@
 language: node_js
 node_js:
-  - '7'
-  - '6'
-  - '5'
-  - '4'
+- '7'
+- '6'
+- '5'
+- '4'
+addons:
+  code_climate: d57eb96bbf4548f5315df86472165b77a1347f7091ca5faba5d146f92244f46e
+script: npm test --coverage
+after_success:
+- npm install -g codeclimate-test-reporter
+- CODECLIMATE_REPO_TOKEN=d57eb96bbf4548f5315df86472165b77a1347f7091ca5faba5d146f92244f46e codeclimate-test-reporter < ./coverage/lcov.info
