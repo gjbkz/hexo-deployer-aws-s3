@@ -20,7 +20,8 @@
     "url": "https://github.com/kei-ito/hexo-deployer-aws-s3/issues"
   },
   "scripts": {
-    "test": "istanbul test _mocha"
+    "test": "mocha",
+    "test_coverage": "istanbul cover _mocha"
   },
   "dependencies": {
     "aws-sdk": "^2.1.35",
