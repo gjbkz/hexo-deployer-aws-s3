@@ -48,8 +48,5 @@ module.exports = function (deploy) {
 		})
 		.then(function (uploadCount) {
 			log.info('Uploaded ' + uploadCount + ' files');
-		})
-		.catch(function (error) {
-			log.error(error);
 		});
 };

@@ -3,8 +3,8 @@ var deployer = require('../deployer');
 
 describe('deployer', function () {
 
-	it('should upload files in public_dir', function (done) {
-		new Promise(function (resolve, reject) {
+	it('should upload files in public_dir', function () {
+		return new Promise(function (resolve, reject) {
 			var uploadedFiles = [];
 			deployer.call({
 				public_dir: __dirname,
@@ -32,9 +32,7 @@ describe('deployer', function () {
 		})
 			.then(function (uploadedFiles) {
 				assert.deepEqual(uploadedFiles, require('./expected/001'));
-				done();
-			})
-			.catch(done);
+			});
 	});
 
 });
