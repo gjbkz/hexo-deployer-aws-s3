@@ -1,0 +1,4 @@
+extends:
+  - './node_modules/@kei-ito/editor-settings/.eslintrc.js'
+env:
+  node: true
