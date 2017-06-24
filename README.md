@@ -2,6 +2,7 @@
 
 AWS S3 deployer plugin for [Hexo].
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/479b379434e0459c8437d2d217558b6c)](https://www.codacy.com/app/kei.itof/hexo-deployer-aws-s3?utm_source=github.com&utm_medium=referral&utm_content=kei-ito/hexo-deployer-aws-s3&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3)
 [![Code Climate](https://lima.codeclimate.com/github/kei-ito/hexo-deployer-aws-s3/badges/gpa.svg)](https://lima.codeclimate.com/github/kei-ito/hexo-deployer-aws-s3)
 [![Test Coverage](https://lima.codeclimate.com/github/kei-ito/hexo-deployer-aws-s3/badges/coverage.svg)](https://lima.codeclimate.com/github/kei-ito/hexo-deployer-aws-s3/coverage)
