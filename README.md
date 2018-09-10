@@ -1,14 +1,10 @@
 # hexo-deployer-aws-s3
 
+[![Build Status](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3)
+[![codecov](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3/branch/master/graph/badge.svg)](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3)
 [![Greenkeeper badge](https://badges.greenkeeper.io/kei-ito/hexo-deployer-aws-s3.svg)](https://greenkeeper.io/)
 
 AWS S3 deployer plugin for [Hexo].
-
-[![Build Status](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/479b379434e0459c8437d2d217558b6c)](https://www.codacy.com/app/kei.itof/hexo-deployer-aws-s3?utm_source=github.com&utm_medium=referral&utm_content=kei-ito/hexo-deployer-aws-s3&utm_campaign=badger)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/479b379434e0459c8437d2d217558b6c)](https://www.codacy.com/app/kei.itof/hexo-deployer-aws-s3?utm_source=github.com&utm_medium=referral&utm_content=kei-ito/hexo-deployer-aws-s3&utm_campaign=Badge_Coverage)
-o-deployer-aws-s3/coverage)
-[![dependencies Status](https://david-dm.org/kei-ito/hexo-deployer-aws-s3/status.svg)](https://david-dm.org/kei-ito/hexo-deployer-aws-s3)
 
 ## Installation
 
