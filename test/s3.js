@@ -1,5 +1,5 @@
 const t = require('tap');
-const {S3} = require('../s3.js');
+const {S3} = require('../lib/s3.js');
 
 t.test('S3', (t) => {
 

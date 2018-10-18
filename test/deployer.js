@@ -1,6 +1,6 @@
 const console = require('console');
 const t = require('tap');
-const {deployer} = require('../deployer.js');
+const {deployer} = require('../lib/deployer.js');
 const expectedFiles = require('./expected.js');
 
 t.test('deployer', (t) => new Promise((resolve, reject) => {
