@@ -79,7 +79,7 @@ test('compare files', async (t) => {
                         await readFile(file),
                         await readFile(join(s3Directory, relative(publicDirectory, file))),
                     ]);
-                    t.deepEqual(source, uploaded);
+                    t.true(source.equals(uploaded));
                 }
             })
         );

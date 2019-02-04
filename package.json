@@ -11,10 +11,11 @@
         "lib/*.js"
     ],
     "scripts": {
-        "cleanup": "rimraf lib",
-        "tsc": "tsc",
-        "build": "npm-run-all --serial cleanup tsc",
-        "test:setup": "./test/setup.sh",
+        "build:cleanup": "rimraf lib",
+        "build:tsc": "tsc",
+        "build:line": "for file in lib/*.js; do echo '' >> $file; done",
+        "build": "npm-run-all --serial build:cleanup build:tsc build:line",
+        "test:setup": "test/setup.sh",
         "test:core": "nyc ava -v lib/*.test.js",
         "test": "npm-run-all --serial build test:setup test:core",
         "lint": "eslint src",
