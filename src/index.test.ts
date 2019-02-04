@@ -8,7 +8,8 @@ import {
 } from 'fs';
 import {exec as $exec, ExecOptions} from 'child_process';
 
-const projectDirectory = join(__dirname, '../test/project');
+const projectRoot = join(__dirname, '..');
+const projectDirectory = join(projectRoot, 'test/project');
 
 interface IExecResult {
     stdout: string,
@@ -26,9 +27,8 @@ const exec = (command: string, options: ExecOptions): Promise<IExecResult> => ne
 });
 
 test.before(async (t) => {
-    const hexo = join(projectDirectory, 'node_modules/.bin/hexo');
-    await exec(`${hexo} generate`, {cwd: projectDirectory});
-    const {stdout, stderr} = await exec(`${hexo} deploy --test test-output`, {cwd: projectDirectory});
+    await exec('npm run generate', {cwd: projectDirectory});
+    const {stdout, stderr} = await exec('npm run deploy', {cwd: projectDirectory});
     t.log(stdout);
     t.log(stderr);
 });

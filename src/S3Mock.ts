@@ -5,7 +5,7 @@ import $mkdirp = require('mkdirp');
 import {writeFile as $writeFile, createWriteStream} from 'fs';
 import {Readable} from 'stream';
 
-interface MyPutObjectOutput {
+interface IMyPutObjectOutput {
     promise: () => Promise<AWSS3.Types.PutObjectOutput>,
 }
 
@@ -50,14 +50,13 @@ export class S3Mock extends EventEmitter {
     public putObject(
         params: AWSS3.Types.PutObjectRequest,
         callback?: () => {},
-    ): MyPutObjectOutput {
+    ): IMyPutObjectOutput {
         const {Body, Bucket, Key} = params;
         const {region = 'undefined'} = this.config;
         if (!(Body instanceof Readable)) {
             throw new Error('Body should be instance of Readable');
         }
         const dest = join(this.output, region, Bucket, Key);
-        console.log(dest);
         this.emit('putObject', params);
         const promise = mkdirp(dirname(dest))
         .then(() => Promise.all([

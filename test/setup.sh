@@ -11,9 +11,9 @@ if [ ! -d $TEST_PROJECT_DIRECTORY ]; then
     cd $TEST_DIRECTORY
     ${PROJECT_DIRECTORY}/node_modules/.bin/hexo init $TEST_PROJECT_DIRECTORY
     cp -r $TEST_DIRECTORY/images $TEST_PROJECT_DIRECTORY/source/images
-
-    ${PROJECT_DIRECTORY}/node_modules/.bin/ts-node setup-yml.ts
 fi
+
+${PROJECT_DIRECTORY}/node_modules/.bin/ts-node ${TEST_DIRECTORY}/setup-config.ts
 
 cd $TEST_PROJECT_DIRECTORY
 npm install $PROJECT_DIRECTORY

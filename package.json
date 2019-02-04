@@ -87,6 +87,9 @@
         },
         "globals": {
             "hexo": true
+        },
+        "rules": {
+            "no-invalid-this": "off"
         }
     },
     "commitlint": {

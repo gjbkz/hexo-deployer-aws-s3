@@ -5,30 +5,14 @@ import {S3 as AWSS3} from 'aws-sdk';
 import {S3Mock} from './S3Mock';
 import glob = require('glob');
 
-declare global {
-    const hexo: {
-        extend: {
-            deployer: {
-                register: (
-                    name: string,
-                    deployer: (
-                        this: HexoContext,
-                        deploy: HexoDeployment,
-                    ) => Promise<void>,
-                ) => Promise<void>,
-            },
-        },
-    };
-}
-
-export interface HexoContext {
+export interface IHexoContext {
     log: {
         info: (...args: Array<string | number | {}>) => void,
-    };
+    },
     public_dir: string,
 }
 
-export interface HexoDeployment {
+export interface IHexoDeployment {
     region: string,
     prefix: string,
     bucket: string,
@@ -36,9 +20,25 @@ export interface HexoDeployment {
     test: string,
 }
 
+declare global {
+    const hexo: {
+        extend: {
+            deployer: {
+                register: (
+                    name: string,
+                    deployer: (
+                        this: IHexoContext,
+                        deploy: IHexoDeployment,
+                    ) => Promise<void>,
+                ) => Promise<void>,
+            },
+        },
+    };
+}
+
 hexo.extend.deployer.register(
     'aws-s3',
-    async function deployer(this: HexoContext, deploy: HexoDeployment): Promise<void> {
+    async function deployer(this: IHexoContext, deploy: IHexoDeployment): Promise<void> {
         const {log, public_dir: publicDir} = this;
         const globPattern = join(publicDir, '**/*');
         const files = await new Promise<Array<string>>((resolve, reject) => {
@@ -62,7 +62,7 @@ hexo.extend.deployer.register(
                 Body: createReadStream(filepath),
                 ContentType,
                 ACL: 'public-read',
-            }
+            };
             await s3.putObject(params).promise();
             log.info(`Uploaded ${Key} [${ContentType}]`);
         }));
