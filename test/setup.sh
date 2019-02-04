@@ -1,7 +1,8 @@
 #!/bin/bash
 set -eux
 
-PROJECT_DIRECTORY=$(cd ${BASH_SOURCE[0]}/../..; pwd)
+SCRIPT_DIRECTORY=$(cd $(dirname ${BASH_SOURCE[0]}); pwd)
+PROJECT_DIRECTORY=$(cd $SCRIPT_DIRECTORY/..; pwd)
 TEST_DIRECTORY=$PROJECT_DIRECTORY/test
 TEST_PROJECT_DIRECTORY=$TEST_DIRECTORY/project
 
@@ -13,7 +14,7 @@ if [ ! -d $TEST_PROJECT_DIRECTORY ]; then
     cp -r $TEST_DIRECTORY/images $TEST_PROJECT_DIRECTORY/source/images
 fi
 
-${PROJECT_DIRECTORY}/node_modules/.bin/ts-node ${TEST_DIRECTORY}/setup-config.ts
+${PROJECT_DIRECTORY}/node_modules/.bin/ts-node ${TEST_DIRECTORY}/setupConfig.ts
 
 cd $TEST_PROJECT_DIRECTORY
 npm install

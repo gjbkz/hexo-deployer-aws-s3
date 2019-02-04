@@ -1,5 +1,5 @@
 import test from 'ava';
-import {join, relative} from 'path';
+import {join, relative, extname} from 'path';
 import {
     readdir as $readdir,
     readFile as $readFile,
@@ -80,7 +80,17 @@ test('compare files', async (t) => {
                         await readFile(file),
                         await readFile(join(s3Directory, relative(publicDirectory, file))),
                     ]);
-                    t.true(source.equals(uploaded));
+                    t.is(uploaded.length, source.length);
+                    switch (extname(name)) {
+                    case '.txt':
+                    case '.html':
+                    case '.css':
+                    case '.js':
+                        t.is(`${uploaded}`, `${source}`);
+                        break;
+                    default:
+                        t.true(uploaded.equals(source), `Failed: ${file}`);
+                    }
                 }
             })
         );
