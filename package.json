@@ -81,24 +81,13 @@
     },
     "eslintConfig": {
         "extends": "./node_modules/@nlib/lint/.eslintrc.json",
-        "overrides": [
-            {
-                "files": [
-                    "src/**/*.ts",
-                    "test/**/*.ts"
-                ],
-                "env": {
-                    "es6": true,
-                    "node": true
-                },
-                "globals": {
-                    "hexo": true
-                },
-                "rules": {
-                    "no-useless-constructor": "off"
-                }
-            }
-        ]
+        "env": {
+            "es6": true,
+            "node": true
+        },
+        "globals": {
+            "hexo": true
+        }
     },
     "commitlint": {
         "extends": [
