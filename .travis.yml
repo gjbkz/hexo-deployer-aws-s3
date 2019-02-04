@@ -4,7 +4,7 @@ node_js:
 - '8'
 - '6'
 install:
-- npm ci
+- if [ TRAVIS_NODE_VERSION = '6' ]; then npm install; else npm ci; fi
 script:
 - npm run test
 # - npm run lint
