@@ -10,12 +10,12 @@ import {exec as $exec, ExecOptions} from 'child_process';
 
 const projectDirectory = join(__dirname, '../test/project');
 
-interface ExecResult {
+interface IExecResult {
     stdout: string,
     stderr: string,
 }
 
-const exec = (command: string, options: ExecOptions) => new Promise<ExecResult>((resolve, reject) => {
+const exec = (command: string, options: ExecOptions): Promise<IExecResult> => new Promise<IExecResult>((resolve, reject) => {
     $exec(command, options, (error, stdout, stderr) => {
         if (error) {
             reject(error);
@@ -26,8 +26,8 @@ const exec = (command: string, options: ExecOptions) => new Promise<ExecResult>(
 });
 
 test.before(async (t) => {
-    await exec('npx hexo generate', {cwd: projectDirectory});
-    const {stdout, stderr} = await exec('npx hexo deploy --test test-output', {cwd: projectDirectory});
+    await exec('node_modules/.bin/hexo generate', {cwd: projectDirectory});
+    const {stdout, stderr} = await exec('node_modules/.bin/hexo deploy --test test-output', {cwd: projectDirectory});
     t.log(stdout);
     t.log(stderr);
 });
