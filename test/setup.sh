@@ -16,4 +16,4 @@ fi
 ${PROJECT_DIRECTORY}/node_modules/.bin/ts-node ${TEST_DIRECTORY}/setup-config.ts
 
 cd $TEST_PROJECT_DIRECTORY
-npm install $PROJECT_DIRECTORY
+npm install

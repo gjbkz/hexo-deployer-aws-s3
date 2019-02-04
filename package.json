@@ -27,7 +27,6 @@
         "version": "npm-run-all --sequential version:changelog version:add"
     },
     "dependencies": {
-        "@types/aws-sdk": "^2.7.0",
         "@types/bluebird": "^3.5.25",
         "@types/glob": "^7.1.1",
         "@types/mime": "^2.0.0",

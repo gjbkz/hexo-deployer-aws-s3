@@ -48,6 +48,7 @@ const setupJSON = async (): Promise<void> => {
         generate: 'hexo generate',
         deploy: 'hexo deploy --test test-output',
     };
+    config.dependencies['hexo-deployer-aws-s3'] = 'file:../..';
     const updated = JSON.stringify(config, null, 4);
     await writeFile(jsonFilePath, updated);
 };
