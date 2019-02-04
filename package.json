@@ -18,7 +18,7 @@
         "test:setup": "test/setup.sh",
         "test:core": "nyc ava -v lib/*.test.js",
         "test": "npm-run-all --serial build test:setup test:core",
-        "lint": "eslint src",
+        "lint": "eslint --ext .ts src test",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
         "version:add": "git add .",
         "version": "npm-run-all --sequential version:changelog version:add"
@@ -40,6 +40,7 @@
         "@nlib/lint": "^3.3.3",
         "@types/js-yaml": "^3.12.0",
         "@types/mkdirp": "^0.5.2",
+        "@typescript-eslint/eslint-plugin": "^1.2.0",
         "ava": "^1.2.0",
         "conventional-changelog-cli": "^2.0.11",
         "eslint": "^5.13.0",
@@ -80,13 +81,24 @@
     },
     "eslintConfig": {
         "extends": "./node_modules/@nlib/lint/.eslintrc.json",
-        "env": {
-            "es6": true,
-            "node": true
-        },
-        "globals": {
-            "hexo": true
-        }
+        "overrides": [
+            {
+                "files": [
+                    "src/**/*.ts",
+                    "test/**/*.ts"
+                ],
+                "env": {
+                    "es6": true,
+                    "node": true
+                },
+                "globals": {
+                    "hexo": true
+                },
+                "rules": {
+                    "no-useless-constructor": "off"
+                }
+            }
+        ]
     },
     "commitlint": {
         "extends": [
