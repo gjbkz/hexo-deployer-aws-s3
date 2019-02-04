@@ -9,10 +9,10 @@ if [ ! -d $TEST_PROJECT_DIRECTORY ]; then
     rm -rf $TEST_PROJECT_DIRECTORY
     mkdir $TEST_PROJECT_DIRECTORY
     cd $TEST_DIRECTORY
-    npx hexo init $TEST_PROJECT_DIRECTORY
+    ${PROJECT_DIRECTORY}/node_modules/.bin/hexo init $TEST_PROJECT_DIRECTORY
     cp -r $TEST_DIRECTORY/images $TEST_PROJECT_DIRECTORY/source/images
 
-    npx ts-node setup-yml.ts
+    ${PROJECT_DIRECTORY}/node_modules/.bin/ts-node setup-yml.ts
 fi
 
 cd $TEST_PROJECT_DIRECTORY
