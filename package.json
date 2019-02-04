@@ -6,6 +6,9 @@
     "description": "AWS S3 deployer for Hexo.",
     "homepage": "https://github.com/kei-ito/hexo-deployer-aws-s3",
     "repository": "https://github.com/kei-ito/hexo-deployer-aws-s3",
+    "engines": {
+        "node": ">=6.9.0"
+    },
     "main": "lib/index.js",
     "files": [
         "lib/*.js"
