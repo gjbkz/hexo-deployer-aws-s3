@@ -26,8 +26,9 @@ const exec = (command: string, options: ExecOptions): Promise<IExecResult> => ne
 });
 
 test.before(async (t) => {
-    await exec('./node_modules/.bin/hexo generate', {cwd: projectDirectory});
-    const {stdout, stderr} = await exec('./node_modules/.bin/hexo deploy --test test-output', {cwd: projectDirectory});
+    const hexo = join(projectDirectory, 'node_modules/.bin/hexo');
+    await exec(`${hexo} generate`, {cwd: projectDirectory});
+    const {stdout, stderr} = await exec(`${hexo} deploy --test test-output`, {cwd: projectDirectory});
     t.log(stdout);
     t.log(stderr);
 });
