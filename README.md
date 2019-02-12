@@ -9,7 +9,7 @@ AWS S3 deployer plugin for [Hexo].
 ## Installation
 
 ``` bash
-$ npm install hexo-deployer-aws-s3 --save
+$ npm install hexo-deployer-aws-s3 --save-dev
 ```
 
 ## Setup
@@ -38,9 +38,6 @@ Instead, you can provide them from global settings below.
 
 For more, see [Configuring the SDK in Node.js].
 
-[Hexo]: http://hexo.io/
-[Configuring the SDK in Node.js]: http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html
-
 ## Usage
 
 ``` bash
@@ -49,3 +46,6 @@ $ hexo deploy
 
 ## License
 MIT
+
+[Hexo]: http://hexo.io/
+[Configuring the SDK in Node.js]: http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html
