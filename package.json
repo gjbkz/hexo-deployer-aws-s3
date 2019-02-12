@@ -1,6 +1,6 @@
 {
     "name": "hexo-deployer-aws-s3",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "license": "MIT",
     "author": "Kei Ito <kei.itof@gmail.com>",
     "description": "AWS S3 deployer for Hexo.",

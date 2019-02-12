@@ -1,3 +1,13 @@
+<a name="0.3.4"></a>
+## [0.3.4](https://github.com/kei-ito/hexo-deployer-aws-s3/compare/v0.3.3...v0.3.4) (2019-02-12)
+
+
+### Bug Fixes
+
+* skip cleanup ([927cb15](https://github.com/kei-ito/hexo-deployer-aws-s3/commit/927cb15))
+
+
+
 <a name="0.3.3"></a>
 ## [0.3.3](https://github.com/kei-ito/hexo-deployer-aws-s3/compare/v0.3.2...v0.3.3) (2019-02-04)
 
