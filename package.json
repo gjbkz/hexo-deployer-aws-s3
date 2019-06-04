@@ -38,7 +38,7 @@
         "upath": "^1.1.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^7.5.2",
+        "@commitlint/cli": "^8.0.0",
         "@commitlint/config-conventional": "^7.5.0",
         "@nlib/lint": "^3.3.3",
         "@types/js-yaml": "^3.12.0",
