@@ -1,8 +1,8 @@
 # hexo-deployer-aws-s3
 
-[![Build Status](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.org/kei-ito/hexo-deployer-aws-s3)
+[![CircleCI](https://circleci.com/gh/kei-ito/hexo-deployer-aws-s3.svg?style=svg)](https://circleci.com/gh/kei-ito/hexo-deployer-aws-s3)
+[![Build Status](https://travis-ci.com/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.com/kei-ito/hexo-deployer-aws-s3)
 [![codecov](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3/branch/master/graph/badge.svg)](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3)
-[![Greenkeeper badge](https://badges.greenkeeper.io/kei-ito/hexo-deployer-aws-s3.svg)](https://greenkeeper.io/)
 
 AWS S3 deployer plugin for [Hexo].
 
