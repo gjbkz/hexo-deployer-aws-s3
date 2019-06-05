@@ -3,7 +3,7 @@ import {getType} from 'mime';
 import {join, relative, toUnix} from 'upath';
 import {S3 as AWSS3} from 'aws-sdk';
 import {S3Mock} from './S3Mock';
-import glob = require('glob');
+import * as globby from 'globby';
 
 export interface IHexoContext {
     log: {
@@ -16,7 +16,7 @@ export interface IHexoDeployment {
     region: string,
     prefix: string,
     bucket: string,
-    glob: glob.IOptions,
+    glob: globby.GlobbyOptions,
     test: string,
 }
 
@@ -41,15 +41,7 @@ hexo.extend.deployer.register(
     async function deployer(this: IHexoContext, deploy: IHexoDeployment): Promise<void> {
         const {log, public_dir: publicDir} = this;
         const globPattern = join(publicDir, '**/*');
-        const files = await new Promise<Array<string>>((resolve, reject) => {
-            glob(globPattern, {...deploy.glob, nodir: true}, (error, files) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(files);
-                }
-            });
-        });
+        const files = await globby(globPattern, {...deploy.glob, onlyFiles: true});
         const clientConfig = {region: deploy.region};
         const s3 = deploy.test ? new S3Mock(deploy.test, clientConfig) : new AWSS3(clientConfig);
         log.info(`Found ${files.length} files`);

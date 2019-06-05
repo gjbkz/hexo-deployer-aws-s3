@@ -21,7 +21,7 @@
         "build": "npm-run-all --serial build:cleanup build:tsc build:sourceMap",
         "test:setup": "test/setup.sh",
         "test:core": "ava -v lib/*.test.js",
-        "test": "npm-run-all --serial build test:setup test:core",
+        "test": "npm-run-all --serial test:setup test:core",
         "lint": "eslint --ext .ts src test",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
         "version:add": "git add .",
@@ -32,7 +32,7 @@
         "@types/mime": "^2.0.1",
         "@types/node": "^12.0.4",
         "aws-sdk": "^2.468.0",
-        "glob": "^7.1.4",
+        "globby": "^9.2.0",
         "mime": "^2.4.3",
         "upath": "^1.1.2"
     },
@@ -50,7 +50,6 @@
         "husky": "^2.3.0",
         "js-yaml": "^3.13.1",
         "lint-staged": "^8.1.7",
-        "mkdirp": "^0.5.1",
         "npm-run-all": "^4.1.5",
         "rimraf": "^2.6.3",
         "ts-node": "^8.2.0",
@@ -67,16 +66,29 @@
     },
     "eslintConfig": {
         "extends": "./node_modules/@nlib/lint/.eslintrc.json",
-        "env": {
-            "es6": true,
-            "node": true
-        },
-        "globals": {
-            "hexo": true
-        },
-        "rules": {
-            "no-invalid-this": "off"
-        }
+        "overrides": [
+            {
+                "files": [
+                    "src/**/*.ts",
+                    "test/**/*.ts"
+                ],
+                "env": {
+                    "es6": true,
+                    "node": true
+                }
+            },
+            {
+                "files": [
+                    "src/index.ts"
+                ],
+                "globals": {
+                    "hexo": true
+                },
+                "rules": {
+                    "no-invalid-this": "off"
+                }
+            }
+        ]
     },
     "commitlint": {
         "extends": [
