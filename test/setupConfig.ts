@@ -1,31 +1,8 @@
 import {safeLoad, safeDump} from 'js-yaml';
 import {join} from 'path';
-import {
-    readFile as $readFile,
-    writeFile as $writeFile,
-} from 'fs';
+import {readFile, writeFile} from '../src/fs';
 
 const projectDirectory = join(__dirname, 'project');
-
-const readFile = (file: string, encoding?: string): Promise<string | Buffer> => new Promise((resolve, reject) => {
-    $readFile(file, encoding, (error, data) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve(data);
-        }
-    });
-});
-
-const writeFile = (file: string, body: string | Buffer): Promise<void> => new Promise((resolve, reject) => {
-    $writeFile(file, body, (error) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve();
-        }
-    });
-});
 
 const setupYML = async (): Promise<void> => {
     const ymlFilePath = join(projectDirectory, '_config.yml');

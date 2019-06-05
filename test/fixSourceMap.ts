@@ -1,43 +1,8 @@
 import {join, extname} from 'path';
 import {join as ujoin} from 'upath';
-import {
-    readdir as $readdir,
-    readFile as $readFile,
-    writeFile as $writeFile,
-} from 'fs';
+import {readFile, writeFile, readdir} from '../src/fs';
 
 const projectRoot = join(__dirname, '..');
-
-const readdir = (directory: string): Promise<Array<string>> => new Promise((resolve, reject) => {
-    $readdir(directory, (error, files) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve(files);
-        }
-    });
-});
-
-const readFile = (file: string, encoding?: string): Promise<string | Buffer> => new Promise((resolve, reject) => {
-    $readFile(file, encoding, (error, data) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve(data);
-        }
-    });
-});
-
-const writeFile = (file: string, body: string | Buffer): Promise<void> => new Promise((resolve, reject) => {
-    $writeFile(file, body, (error) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve();
-        }
-    });
-});
-
 const fixSourceMap = async (): Promise<void> => {
     const libraryPath = join(projectRoot, 'lib');
     await Promise.all(
