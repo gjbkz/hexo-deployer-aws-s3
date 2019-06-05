@@ -1,3 +1,8 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/kei-ito/hexo-deployer-aws-s3/compare/v0.3.5...v1.0.0) (2019-06-05)
+
+
+
 <a name="0.3.5"></a>
 ## [0.3.5](https://github.com/kei-ito/hexo-deployer-aws-s3/compare/v0.3.4...v0.3.5) (2019-02-12)
 
