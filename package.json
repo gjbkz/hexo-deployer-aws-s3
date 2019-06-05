@@ -20,7 +20,7 @@
         "build:sourceMap": "ts-node test/fixSourceMap.ts",
         "build": "npm-run-all --serial build:cleanup build:tsc build:sourceMap",
         "test:setup": "test/setup.sh",
-        "test:core": "ava -v lib/*.test.js",
+        "test:core": "ava -v",
         "test": "npm-run-all --serial test:setup test:core",
         "lint": "eslint --ext .ts src test",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
@@ -56,6 +56,9 @@
         "typescript": "^3.5.1"
     },
     "ava": {
+        "files": [
+            "lib/**/*.test.js"
+        ],
         "compileEnhancements": false,
         "extensions": [
             "ts"
