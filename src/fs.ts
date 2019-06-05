@@ -44,8 +44,17 @@ export const readdir = (
 export const mkdir = (
     directoryPath: fs.PathLike,
     options?: MakeDirectoryOptions,
-): Promise<void> => new Promise((resolve, reject) => {
+): Promise<void> => new Promise<void>((resolve, reject) => {
     fs.mkdir(directoryPath, options, (error) => error ? reject(error) : resolve());
+})
+.catch(async (error) => {
+    if (error.code === 'EEXIST') {
+        const stats = await stat(directoryPath);
+        if (stats.isDirectory()) {
+            return;
+        }
+    }
+    throw error;
 });
 
 export const mkdirp = (
@@ -55,12 +64,6 @@ export const mkdirp = (
 .catch((error) => {
     if (error.code === 'ENOENT') {
         return mkdirp(path.dirname(directoryPath)).then(() => mkdir(directoryPath));
-    } else if (error.code === 'EEXIST') {
-        return stat(directoryPath).then((stats) => {
-            if (!stats.isDirectory()) {
-                throw error;
-            }
-        });
     }
     throw error;
 });
