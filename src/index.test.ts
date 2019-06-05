@@ -1,65 +1,59 @@
 import test from 'ava';
 import {join, relative, extname} from 'path';
-import {
-    readdir as $readdir,
-    readFile as $readFile,
-    stat as $stat,
-    Stats,
-} from 'fs';
-import {exec as $exec, ExecOptions} from 'child_process';
+import * as childProcess from 'child_process';
+import {readdir, stat, readFile} from './fs';
+
+import * as stream from 'stream';
+
+interface ISpawnParameters {
+    command: string,
+    args?: Array<string>,
+    options?: childProcess.SpawnOptionsWithoutStdio,
+    stdout?: stream.Writable,
+    stderr?: stream.Writable,
+}
+
+const spawn = (
+    parameters: ISpawnParameters,
+): Promise<void> => new Promise((resolve, reject) => {
+    const subProcess = childProcess.spawn(
+        parameters.command,
+        parameters.args || [],
+        parameters.options || {},
+    )
+    .once('error', reject)
+    .once('exit', (code) => {
+        if (code === 0) {
+            resolve();
+        } else {
+            reject(new Error(`The command "${parameters.command}" exited with code ${code}.`));
+        }
+    });
+    if (subProcess.stdout) {
+        subProcess.stdout.pipe(parameters.stdout || process.stdout);
+    }
+    if (subProcess.stderr) {
+        subProcess.stderr.pipe(parameters.stderr || process.stderr);
+    }
+});
 
 const projectRoot = join(__dirname, '..');
 const projectDirectory = join(projectRoot, 'test/project');
 
-interface IExecResult {
-    stdout: string,
-    stderr: string,
-}
-
-const exec = (command: string, options: ExecOptions): Promise<IExecResult> => new Promise<IExecResult>((resolve, reject) => {
-    $exec(command, options, (error, stdout, stderr) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve({stdout, stderr});
-        }
+test.before(async () => {
+    await spawn({
+        command: 'npm run generate',
+        options: {
+            cwd: projectDirectory,
+            shell: true,
+        },
     });
-});
-
-test.before(async (t) => {
-    await exec('npm run generate', {cwd: projectDirectory});
-    const {stdout, stderr} = await exec('npm run deploy', {cwd: projectDirectory});
-    t.log(stdout);
-    t.log(stderr);
-});
-
-const readFile = (file: string): Promise<Buffer> => new Promise((resolve, reject) => {
-    $readFile(file, (error, buffer) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve(buffer);
-        }
-    });
-});
-
-const readdir = (directory: string): Promise<Array<string>> => new Promise((resolve, reject) => {
-    $readdir(directory, (error, files) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve(files);
-        }
-    });
-});
-
-const stat = (file: string): Promise<Stats> => new Promise((resolve, reject) => {
-    $stat(file, (error, stats: Stats) => {
-        if (error) {
-            reject(error);
-        } else {
-            resolve(stats);
-        }
+    await spawn({
+        command: 'npm run deploy',
+        options: {
+            cwd: projectDirectory,
+            shell: true,
+        },
     });
 });
 
@@ -68,8 +62,7 @@ test('compare files', async (t) => {
     const s3Directory = join(projectDirectory, 'test-output/us-east-1/test');
     const testDirectory = async (directory: string): Promise<void> => {
         await Promise.all(
-            (await readdir(directory))
-            .map(async (name) => {
+            (await readdir(directory)).map(async (name) => {
                 const file = join(directory, name);
                 const stats = await stat(file);
                 if (stats.isDirectory()) {
@@ -77,8 +70,8 @@ test('compare files', async (t) => {
                 } else {
                     t.log(file);
                     const [source, uploaded] = await Promise.all([
-                        await readFile(file),
-                        await readFile(join(s3Directory, relative(publicDirectory, file))),
+                        readFile(file),
+                        readFile(join(s3Directory, relative(publicDirectory, file))),
                     ]);
                     t.is(uploaded.length, source.length);
                     switch (extname(name)) {
@@ -89,10 +82,13 @@ test('compare files', async (t) => {
                         t.is(`${uploaded}`, `${source}`);
                         break;
                     default:
-                        t.true(uploaded.equals(source), `Failed: ${file}`);
+                        t.true(
+                            Buffer.isBuffer(uploaded) && Buffer.isBuffer(source) && uploaded.equals(source),
+                            `Failed: ${file}`,
+                        );
                     }
                 }
-            })
+            }),
         );
     };
     await testDirectory(publicDirectory);
