@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/kei-ito/hexo-deployer-aws-s3.svg?style=svg)](https://circleci.com/gh/kei-ito/hexo-deployer-aws-s3)
 [![Build Status](https://travis-ci.com/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.com/kei-ito/hexo-deployer-aws-s3)
+[![Build status](https://ci.appveyor.com/api/projects/status/novh4n5r73xvrsl0?svg=true)](https://ci.appveyor.com/project/kei-ito/hexo-deployer-aws-s3)
 [![codecov](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3/branch/master/graph/badge.svg)](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3)
 
 AWS S3 deployer plugin for [Hexo].
