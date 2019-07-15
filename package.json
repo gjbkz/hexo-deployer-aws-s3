@@ -34,8 +34,8 @@
     "dependencies": {
         "@types/glob": "^7.1.1",
         "@types/mime": "^2.0.1",
-        "@types/node": "^12.0.12",
-        "aws-sdk": "^2.488.0",
+        "@types/node": "^12.6.2",
+        "aws-sdk": "^2.493.0",
         "globby": "^10.0.1",
         "mime": "^2.4.4",
         "upath": "^1.1.2"
@@ -43,22 +43,22 @@
     "devDependencies": {
         "@commitlint/cli": "^8.0.0",
         "@commitlint/config-conventional": "^8.0.0",
-        "@nlib/lint": "^3.10.2",
+        "@nlib/lint": "^3.12.0",
         "@types/js-yaml": "^3.12.1",
         "@types/mkdirp": "^0.5.2",
-        "@typescript-eslint/eslint-plugin": "^1.11.0",
-        "@typescript-eslint/parser": "^1.11.0",
-        "ava": "^2.1.0",
+        "@typescript-eslint/eslint-plugin": "^1.12.0",
+        "@typescript-eslint/parser": "^1.12.0",
+        "ava": "^2.2.0",
         "conventional-changelog-cli": "^2.0.21",
         "cpy-cli": "^2.0.0",
         "eslint": "^6.0.1",
         "husky": "^3.0.0",
         "js-yaml": "^3.13.1",
-        "lint-staged": "^9.1.0",
+        "lint-staged": "^9.2.0",
         "npm-run-all": "^4.1.5",
         "rimraf": "^2.6.3",
         "ts-node": "^8.3.0",
-        "typescript": "^3.5.2"
+        "typescript": "^3.5.3"
     },
     "ava": {
         "files": [
