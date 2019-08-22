@@ -9,11 +9,13 @@ interface IMyPutObjectOutput {
     promise: () => Promise<AWSS3.Types.PutObjectOutput>,
 }
 
-const writeFileStream = (file: string, body: Readable): Promise<void> => new Promise((resolve, reject) => {
-    body.pipe(createWriteStream(file))
-    .once('error', reject)
-    .once('finish', resolve);
-});
+const writeFileStream = async (file: string, body: Readable): Promise<void> => {
+    await new Promise((resolve, reject) => {
+        body.pipe(createWriteStream(file))
+        .once('error', reject)
+        .once('finish', resolve);
+    });
+};
 
 export class S3Mock extends EventEmitter {
 
@@ -42,17 +44,22 @@ export class S3Mock extends EventEmitter {
         const dest = join(this.output, region, Bucket, Key);
         this.emit('putObject', params);
         const promise = mkdirp(dirname(dest))
-        .then(() => Promise.all([
-            writeFileStream(dest, Body),
-            writeFile(`${dest}.json`, JSON.stringify(params, null, 2)),
-        ]))
+        .then(async () => {
+            await Promise.all([
+                writeFileStream(dest, Body),
+                writeFile(`${dest}.json`, JSON.stringify(params, null, 2)),
+            ]);
+        })
         .then(() => {
             if (callback) {
                 callback();
             }
             return {};
         });
-        return {promise: () => promise};
+        return {promise: async () => {
+            const result = await promise;
+            return result;
+        }};
     }
 
 }
