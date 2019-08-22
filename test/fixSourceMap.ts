@@ -9,7 +9,7 @@ const fixSourceMap = async (): Promise<void> => {
         (await readdir(libraryPath))
         .filter((name) => extname(name) === '.js')
         .map(async (name) => {
-            if ((/\.test\.js$/).test(name)) {
+            if (name.endsWith('.test.js')) {
                 return;
             }
             const scriptPath = join(libraryPath, name);

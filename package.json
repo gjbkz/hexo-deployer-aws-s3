@@ -26,7 +26,7 @@
         "test:setup": "run-s test:setup:cleanup test:setup:hexo test:setup:copy test:setup:config",
         "test:core": "ava -v",
         "test": "npm-run-all --serial test:setup test:core",
-        "lint": "eslint --ext .ts src test",
+        "lint": "eslint --ext .ts src test/*.ts",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
         "version:add": "git add .",
         "version": "npm-run-all --sequential version:changelog version:add"
@@ -34,29 +34,29 @@
     "dependencies": {
         "@types/glob": "^7.1.1",
         "@types/mime": "^2.0.1",
-        "@types/node": "^12.6.2",
-        "aws-sdk": "^2.493.0",
+        "@types/node": "^12.7.2",
+        "aws-sdk": "^2.515.0",
         "globby": "^10.0.1",
         "mime": "^2.4.4",
         "upath": "^1.1.2"
     },
     "devDependencies": {
-        "@commitlint/cli": "^8.0.0",
-        "@commitlint/config-conventional": "^8.0.0",
-        "@nlib/lint": "^3.12.0",
+        "@commitlint/cli": "^8.1.0",
+        "@commitlint/config-conventional": "^8.1.0",
+        "@nlib/lint": "^3.13.3",
         "@types/js-yaml": "^3.12.1",
         "@types/mkdirp": "^0.5.2",
-        "@typescript-eslint/eslint-plugin": "^1.12.0",
-        "@typescript-eslint/parser": "^1.12.0",
-        "ava": "^2.2.0",
-        "conventional-changelog-cli": "^2.0.21",
+        "@typescript-eslint/eslint-plugin": "^2.0.0",
+        "@typescript-eslint/parser": "^2.0.0",
+        "ava": "^2.3.0",
+        "conventional-changelog-cli": "^2.0.23",
         "cpy-cli": "^2.0.0",
-        "eslint": "^6.0.1",
-        "husky": "^3.0.0",
+        "eslint": "^6.2.1",
+        "husky": "^3.0.4",
         "js-yaml": "^3.13.1",
-        "lint-staged": "^9.2.0",
+        "lint-staged": "^9.2.3",
         "npm-run-all": "^4.1.5",
-        "rimraf": "^2.6.3",
+        "rimraf": "^3.0.0",
         "ts-node": "^8.3.0",
         "typescript": "^3.5.3"
     },
@@ -93,7 +93,16 @@
                     "hexo": true
                 },
                 "rules": {
-                    "no-invalid-this": "off"
+                    "no-invalid-this": "off",
+                    "@typescript-eslint/no-floating-promises": "off"
+                }
+            },
+            {
+                "files": [
+                    "test/**/*.ts"
+                ],
+                "parserOptions": {
+                    "project": "test/tsconfig.json"
                 }
             }
         ]

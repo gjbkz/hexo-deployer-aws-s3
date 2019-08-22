@@ -31,19 +31,21 @@ const setupJSON = async (): Promise<void> => {
     await writeFile(jsonFilePath, updated);
 };
 
-const installPackage = (): Promise<void> => new Promise((resolve, reject) => {
-    fs.symlink(
-        path.join(__dirname, '..'),
-        path.join(projectDirectory, 'node_modules', 'hexo-deployer-aws-s3'),
-        (error) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve();
-            }
-        },
-    );
-});
+const installPackage = async (): Promise<void> => {
+    await new Promise((resolve, reject) => {
+        fs.symlink(
+            path.join(__dirname, '..'),
+            path.join(projectDirectory, 'node_modules', 'hexo-deployer-aws-s3'),
+            (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            },
+        );
+    });
+};
 
 if (!module.parent) {
     Promise.all([
