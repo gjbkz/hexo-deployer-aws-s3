@@ -7,7 +7,7 @@
     "homepage": "https://github.com/kei-ito/hexo-deployer-aws-s3",
     "repository": "https://github.com/kei-ito/hexo-deployer-aws-s3",
     "engines": {
-        "node": ">=8"
+        "node": ">=10"
     },
     "main": "lib/index.js",
     "files": [
@@ -21,9 +21,8 @@
         "build": "npm-run-all --serial build:cleanup build:tsc build:sourceMap",
         "test:setup:cleanup": "rimraf test/project",
         "test:setup:hexo": "hexo init test/project",
-        "test:setup:copy": "cpy test/images test/project/source/images",
         "test:setup:config": "ts-node test/setupConfig.ts",
-        "test:setup": "run-s test:setup:cleanup test:setup:hexo test:setup:copy test:setup:config",
+        "test:setup": "run-s test:setup:cleanup test:setup:hexo test:setup:config",
         "test:core": "ava -v",
         "test": "npm-run-all --serial test:setup test:core",
         "lint": "eslint --ext .ts src test/*.ts",
@@ -34,39 +33,38 @@
     "dependencies": {
         "@types/glob": "^7.1.1",
         "@types/mime": "^2.0.1",
-        "@types/node": "^12.7.2",
-        "aws-sdk": "^2.515.0",
-        "globby": "^10.0.1",
+        "@types/node": "^13.7.1",
+        "aws-sdk": "^2.616.0",
+        "globby": "^11.0.0",
         "mime": "^2.4.4",
-        "upath": "^1.1.2"
+        "upath": "^1.2.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^8.1.0",
-        "@commitlint/config-conventional": "^8.1.0",
-        "@nlib/lint": "^3.13.3",
-        "@types/js-yaml": "^3.12.1",
-        "@types/mkdirp": "^0.5.2",
-        "@typescript-eslint/eslint-plugin": "^2.0.0",
-        "@typescript-eslint/parser": "^2.0.0",
-        "ava": "^2.3.0",
-        "conventional-changelog-cli": "^2.0.23",
-        "cpy-cli": "^2.0.0",
-        "eslint": "^6.2.1",
-        "husky": "^3.0.4",
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-conventional": "^8.3.4",
+        "@nlib/lint": "^3.17.1",
+        "@types/js-yaml": "^3.12.2",
+        "@types/mkdirp": "^1.0.0",
+        "@typescript-eslint/eslint-plugin": "^2.19.2",
+        "@typescript-eslint/parser": "^2.19.2",
+        "ava": "^3.3.0",
+        "conventional-changelog-cli": "^2.0.31",
+        "eslint": "^6.8.0",
+        "husky": "^4.2.2",
         "js-yaml": "^3.13.1",
-        "lint-staged": "^9.2.3",
+        "lint-staged": "^10.0.7",
         "npm-run-all": "^4.1.5",
-        "rimraf": "^3.0.0",
-        "ts-node": "^8.3.0",
-        "typescript": "^3.5.3"
+        "rimraf": "^3.0.2",
+        "ts-node": "^8.6.2",
+        "typescript": "^3.7.5"
     },
     "ava": {
         "files": [
             "lib/**/*.test.js"
         ],
-        "compileEnhancements": false,
         "extensions": [
-            "ts"
+            "ts",
+            "js"
         ],
         "require": [
             "ts-node/register"
@@ -83,6 +81,14 @@
                 "env": {
                     "es6": true,
                     "node": true
+                }
+            },
+            {
+                "files": [
+                    "*.test.ts"
+                ],
+                "rules": {
+                    "@typescript-eslint/no-unnecessary-condition": "off"
                 }
             },
             {
