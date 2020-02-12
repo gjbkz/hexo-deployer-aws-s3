@@ -13,8 +13,4 @@ install:
   - c8 npm run test
   - c8 report --reporter=text-lcov > coverage.lcov
   - codecov
-  - ps: Install-Product node 8
-  - npm install -g codecov nyc hexo
-  - nyc npm run test
-  - codecov
-build: 'off'
+build: off
