@@ -87,6 +87,14 @@
             },
             {
                 "files": [
+                    "*.test.ts"
+                ],
+                "rules": {
+                    "@typescript-eslint/no-unnecessary-condition": "off"
+                }
+            },
+            {
+                "files": [
                     "src/index.ts"
                 ],
                 "globals": {
