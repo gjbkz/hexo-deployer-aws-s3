@@ -7,7 +7,7 @@
     "homepage": "https://github.com/kei-ito/hexo-deployer-aws-s3",
     "repository": "https://github.com/kei-ito/hexo-deployer-aws-s3",
     "engines": {
-        "node": ">=8"
+        "node": ">=10"
     },
     "main": "lib/index.js",
     "files": [
@@ -21,7 +21,6 @@
         "build": "npm-run-all --serial build:cleanup build:tsc build:sourceMap",
         "test:setup:cleanup": "rimraf test/project",
         "test:setup:hexo": "hexo init test/project",
-        "test:setup:copy": "cpy 'test/images/*' test/project/source/images",
         "test:setup:config": "ts-node test/setupConfig.ts",
         "test:setup": "run-s test:setup:cleanup test:setup:hexo test:setup:copy test:setup:config",
         "test:core": "ava -v",
@@ -50,7 +49,6 @@
         "@typescript-eslint/parser": "^2.19.2",
         "ava": "^3.3.0",
         "conventional-changelog-cli": "^2.0.31",
-        "cpy-cli": "^3.0.0",
         "eslint": "^6.8.0",
         "husky": "^4.2.2",
         "js-yaml": "^3.13.1",

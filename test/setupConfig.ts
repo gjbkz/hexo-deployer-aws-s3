@@ -1,9 +1,21 @@
 import {safeLoad, safeDump} from 'js-yaml';
 import * as path from 'path';
-import * as fs from 'fs';
+import {promises as afs} from 'fs';
 import {readFile, writeFile} from '../src/fs';
 
 const projectDirectory = path.join(__dirname, 'project');
+
+const copyFiles = async (): Promise<void> => {
+    const imagesDirectory = path.join(__dirname, 'images');
+    const files = await afs.readdir(imagesDirectory);
+    const destDirectory = path.join(projectDirectory, 'source/images');
+    await afs.mkdir(destDirectory, {recursive: true});
+    await Promise.all(files.map(async (name) => {
+        const source = path.join(imagesDirectory, name);
+        const dest = path.join(destDirectory, name);
+        await afs.copyFile(source, dest);
+    }));
+};
 
 const setupYML = async (): Promise<void> => {
     const ymlFilePath = path.join(projectDirectory, '_config.yml');
@@ -32,27 +44,22 @@ const setupJSON = async (): Promise<void> => {
 };
 
 const installPackage = async (): Promise<void> => {
-    await new Promise((resolve, reject) => {
-        fs.symlink(
-            path.join(__dirname, '..'),
-            path.join(projectDirectory, 'node_modules', 'hexo-deployer-aws-s3'),
-            (error) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            },
-        );
-    });
+    await afs.symlink(
+        path.join(__dirname, '..'),
+        path.join(projectDirectory, 'node_modules', 'hexo-deployer-aws-s3'),
+    );
+};
+
+const setup = async (): Promise<void> => {
+    await afs.mkdir(projectDirectory, {recursive: true});
+    await copyFiles();
+    await setupYML();
+    await setupJSON();
+    await installPackage();
 };
 
 if (!module.parent) {
-    Promise.all([
-        setupYML(),
-        setupJSON(),
-    ])
-    .then(installPackage)
+    setup()
     .catch((error) => {
         process.stderr.write(`${error.stack || error}`);
         process.exit(1);
