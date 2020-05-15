@@ -33,7 +33,7 @@
     "dependencies": {
         "@types/glob": "^7.1.1",
         "@types/mime": "^2.0.1",
-        "@types/node": "^13.7.1",
+        "@types/node": "^14.0.0",
         "aws-sdk": "^2.616.0",
         "globby": "^11.0.0",
         "mime": "^2.4.4",
