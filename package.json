@@ -37,7 +37,7 @@
         "aws-sdk": "^2.616.0",
         "globby": "^11.0.0",
         "mime": "^2.4.4",
-        "upath": "^1.2.0"
+        "upath": "^2.0.0"
     },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
