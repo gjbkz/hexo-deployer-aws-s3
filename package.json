@@ -40,7 +40,7 @@
         "upath": "^2.0.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^11.0.0",
+        "@commitlint/cli": "^12.0.0",
         "@commitlint/config-conventional": "^11.0.0",
         "@nlib/lint": "^3.17.1",
         "@types/js-yaml": "^3.12.2",
