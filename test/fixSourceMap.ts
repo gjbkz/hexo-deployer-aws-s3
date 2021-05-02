@@ -1,21 +1,20 @@
-import {join, extname} from 'path';
-import {join as ujoin} from 'upath';
+import * as path from 'upath';
 import {promises as afs} from 'fs';
 import * as console from 'console';
 
-const projectRoot = join(__dirname, '..');
+const projectRoot = path.join(__dirname, '..');
 const fixSourceMap = async (): Promise<void> => {
-    const libraryPath = join(projectRoot, 'lib');
+    const libraryPath = path.join(projectRoot, 'lib');
     for (const name of await afs.readdir(libraryPath)) {
-        if (extname(name) === '.js') {
+        if (path.extname(name) === '.js') {
             if (name.endsWith('.test.js')) {
                 return;
             }
-            const scriptPath = join(libraryPath, name);
+            const scriptPath = path.join(libraryPath, name);
             const script = await afs.readFile(scriptPath, 'utf8');
             const updated = script.replace(
                 /\/\/#\s+sourceMappingURL=(\S*)/g,
-                (_, url) => `\n//# sourceMappingURL=${ujoin('lib', url)}`);
+                (_, url) => `\n//# sourceMappingURL=${path.join('lib', url)}`);
             await afs.writeFile(scriptPath, updated);
         }
     }

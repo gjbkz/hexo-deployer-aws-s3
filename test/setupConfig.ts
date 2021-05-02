@@ -1,5 +1,5 @@
 import * as yaml from 'js-yaml';
-import * as path from 'path';
+import * as path from 'upath';
 import {promises as afs} from 'fs';
 import * as console from 'console';
 

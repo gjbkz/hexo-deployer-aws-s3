@@ -1,6 +1,6 @@
-import {createReadStream} from 'fs';
-import {getType} from 'mime';
-import {join, relative, toUnix} from 'upath';
+import * as fs from 'fs';
+import * as mime from 'mime';
+import * as path from 'upath';
 import {S3 as AWSS3} from 'aws-sdk';
 import {S3Mock} from './S3Mock';
 import * as globby from 'globby';
@@ -40,22 +40,21 @@ hexo.extend.deployer.register(
     'aws-s3',
     async function deployer(this: HexoContext, deploy: HexoDeployment): Promise<void> {
         const {log, public_dir: publicDir} = this;
-        const globPattern = join(publicDir, '**/*');
+        const globPattern = path.join(publicDir, '**/*');
         const files = await globby(globPattern, {...deploy.glob, onlyFiles: true});
         const clientConfig = {region: deploy.region};
         const s3 = deploy.test ? new S3Mock(deploy.test, clientConfig) : new AWSS3(clientConfig);
         log.info(`Found ${files.length} files`);
         const results = await Promise.all(files.map(async (filepath) => {
-            const Key = toUnix(join(deploy.prefix || '', relative(publicDir, filepath)));
-            const ContentType = getType(filepath) || undefined;
-            const params: AWSS3.Types.PutObjectRequest = {
+            const Key = path.toUnix(path.join(deploy.prefix || '', path.relative(publicDir, filepath)));
+            const ContentType = mime.getType(filepath) || undefined;
+            await s3.putObject({
                 Bucket: deploy.bucket,
                 Key,
-                Body: createReadStream(filepath),
+                Body: fs.createReadStream(filepath),
                 ContentType,
                 ACL: 'public-read',
-            };
-            await s3.putObject(params).promise();
+            }).promise();
             log.info(`Uploaded ${Key} [${ContentType}]`);
         }));
         log.info(`Uploaded ${results.length} files`);

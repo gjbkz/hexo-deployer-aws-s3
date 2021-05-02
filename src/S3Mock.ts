@@ -1,6 +1,6 @@
 import {EventEmitter} from 'events';
 import type {S3} from 'aws-sdk';
-import {join, dirname} from 'path';
+import * as path from 'upath';
 import {createWriteStream, promises as afs} from 'fs';
 import {Readable} from 'stream';
 
@@ -40,9 +40,9 @@ export class S3Mock extends EventEmitter {
         if (!(Body instanceof Readable)) {
             throw new Error('Body should be instance of Readable');
         }
-        const dest = join(this.output, region, Bucket, Key);
+        const dest = path.join(this.output, region, Bucket, Key);
         this.emit('putObject', params);
-        const promise = afs.mkdir(dirname(dest), {recursive: true})
+        const promise = afs.mkdir(path.dirname(dest), {recursive: true})
         .then(async () => {
             await Promise.all([
                 writeFileStream(dest, Body),
