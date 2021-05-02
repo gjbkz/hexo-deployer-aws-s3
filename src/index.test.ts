@@ -6,10 +6,12 @@ import {join, relative} from 'path';
 const projectRoot = join(__dirname, '..');
 const projectDirectory = join(projectRoot, 'test/project');
 
-test.before(async () => {
+test.before(async (t) => {
     const cwd = projectDirectory;
-    await exec('npm run generate', {cwd});
-    await exec('npm run deploy', {cwd});
+    const result1 = await exec('npm run generate', {cwd});
+    t.log(result1.stdout, result1.stderr);
+    const result2 = await exec('npm run deploy', {cwd});
+    t.log(result2.stdout, result2.stderr);
 });
 
 test('compare files', async (t) => {

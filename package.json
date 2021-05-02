@@ -31,10 +31,10 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "aws-sdk": "2.897.0",
-        "globby": "11.0.3",
-        "mime": "2.5.2",
-        "upath": "2.0.1"
+        "aws-sdk": "^2.897.0",
+        "globby": "^11.0.3",
+        "mime": "^2.5.2",
+        "upath": "^2.0.1"
     },
     "devDependencies": {
         "@nlib/changelog": "0.1.9",
