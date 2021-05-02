@@ -1,8 +1,6 @@
 # hexo-deployer-aws-s3
 
-[![CircleCI](https://circleci.com/gh/kei-ito/hexo-deployer-aws-s3.svg?style=svg)](https://circleci.com/gh/kei-ito/hexo-deployer-aws-s3)
-[![Build Status](https://travis-ci.com/kei-ito/hexo-deployer-aws-s3.svg?branch=master)](https://travis-ci.com/kei-ito/hexo-deployer-aws-s3)
-[![Build status](https://ci.appveyor.com/api/projects/status/novh4n5r73xvrsl0?svg=true)](https://ci.appveyor.com/project/kei-ito/hexo-deployer-aws-s3)
+[![Test](https://github.com/kei-ito/hexo-deployer-aws-s3/actions/workflows/workflow.yml/badge.svg)](https://github.com/kei-ito/hexo-deployer-aws-s3/actions/workflows/workflow.yml)
 [![codecov](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3/branch/master/graph/badge.svg)](https://codecov.io/gh/kei-ito/hexo-deployer-aws-s3)
 
 AWS S3 deployer plugin for [Hexo](http://hexo.io/).
@@ -15,7 +13,7 @@ $ npm install hexo-deployer-aws-s3 --save-dev
 
 ## Setup
 
-### Configurations
+### 1. Configurations
 
 Put the `deploy` configurations to `_config.yml`.
 
@@ -27,7 +25,7 @@ deploy:
   prefix: blog-resources   # The s3 key prefix
 ```
 
-### Credentials
+### 2. Credentials
 
 This plugin does not handle AWS credentials. Please set your credentials according to the [AWS documentation](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html).
 
