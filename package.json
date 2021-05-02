@@ -59,6 +59,9 @@
         "typescript": "4.2.4"
     },
     "lint-staged": {
+        "*.ts": [
+            "eslint"
+        ],
         "*.js": [
             "eslint"
         ]
