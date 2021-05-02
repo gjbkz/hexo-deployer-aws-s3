@@ -31,10 +31,10 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "aws-sdk": "^2.616.0",
-        "globby": "^11.0.0",
-        "mime": "^2.4.4",
-        "upath": "^2.0.0"
+        "aws-sdk": "2.897.0",
+        "globby": "11.0.3",
+        "mime": "2.5.2",
+        "upath": "2.0.1"
     },
     "devDependencies": {
         "@nlib/changelog": "0.1.9",
@@ -42,20 +42,20 @@
         "@nlib/githooks": "0.0.5",
         "@nlib/lint-commit": "0.1.4",
         "@types/glob": "7.1.3",
-        "@types/js-yaml": "^3.12.2",
+        "@types/js-yaml": "4.0.1",
         "@types/mime": "2.0.3",
-        "@types/mkdirp": "^1.0.0",
-        "@types/node": "13.13.51",
+        "@types/mkdirp": "1.0.1",
+        "@types/node": "15.0.1",
         "@typescript-eslint/eslint-plugin": "4.22.0",
         "@typescript-eslint/parser": "4.22.0",
-        "ava": "^3.3.0",
+        "ava": "3.15.0",
         "eslint": "7.25.0",
-        "js-yaml": "^3.13.1",
-        "lint-staged": "^10.0.7",
+        "js-yaml": "4.1.0",
+        "lint-staged": "10.5.4",
         "npm-run-all": "^4.1.5",
         "rimraf": "^3.0.2",
-        "ts-node": "^9.0.0",
-        "typescript": "^4.0.0"
+        "ts-node": "9.1.1",
+        "typescript": "4.2.4"
     },
     "ava": {
         "files": [
