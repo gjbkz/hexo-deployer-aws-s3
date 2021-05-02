@@ -17,8 +17,7 @@
     "scripts": {
         "build:cleanup": "rimraf lib",
         "build:tsc": "tsc",
-        "build:sourceMap": "ts-node test/fixSourceMap.ts",
-        "build": "run-s build:cleanup build:tsc build:sourceMap",
+        "build": "run-s build:cleanup build:tsc",
         "test:setup:cleanup": "rimraf test/project",
         "test:setup:hexo": "hexo init test/project",
         "test:setup:config": "ts-node test/setupConfig.ts",
