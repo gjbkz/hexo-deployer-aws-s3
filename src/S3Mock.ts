@@ -1,12 +1,11 @@
 import {EventEmitter} from 'events';
-import {S3 as AWSS3} from 'aws-sdk';
-import {join, dirname} from 'path';
-import {createWriteStream} from 'fs';
+import type {S3} from 'aws-sdk';
+import * as path from 'upath';
+import {createWriteStream, promises as afs} from 'fs';
 import {Readable} from 'stream';
-import {mkdirp, writeFile} from './fs';
 
-interface IMyPutObjectOutput {
-    promise: () => Promise<AWSS3.Types.PutObjectOutput>,
+interface PutObjectOutput {
+    promise: () => Promise<S3.Types.PutObjectOutput>,
 }
 
 const writeFileStream = async (file: string, body: Readable): Promise<void> => {
@@ -21,11 +20,11 @@ export class S3Mock extends EventEmitter {
 
     public readonly output: string;
 
-    public readonly config: AWSS3.Types.ClientConfiguration;
+    public readonly config: S3.Types.ClientConfiguration;
 
     public constructor(
         output: string,
-        config: AWSS3.Types.ClientConfiguration = {},
+        config: S3.Types.ClientConfiguration = {},
     ) {
         super();
         this.output = output;
@@ -33,21 +32,21 @@ export class S3Mock extends EventEmitter {
     }
 
     public putObject(
-        params: AWSS3.Types.PutObjectRequest,
-        callback?: () => {},
-    ): IMyPutObjectOutput {
+        params: S3.Types.PutObjectRequest,
+        callback?: () => void,
+    ): PutObjectOutput {
         const {Body, Bucket, Key} = params;
         const {region = 'undefined'} = this.config;
         if (!(Body instanceof Readable)) {
             throw new Error('Body should be instance of Readable');
         }
-        const dest = join(this.output, region, Bucket, Key);
+        const dest = path.join(this.output, region, Bucket, Key);
         this.emit('putObject', params);
-        const promise = mkdirp(dirname(dest))
+        const promise = afs.mkdir(path.dirname(dest), {recursive: true})
         .then(async () => {
             await Promise.all([
                 writeFileStream(dest, Body),
-                writeFile(`${dest}.json`, JSON.stringify(params, null, 2)),
+                afs.writeFile(`${dest}.json`, JSON.stringify(params, null, 2)),
             ]);
         })
         .then(() => {
@@ -56,10 +55,7 @@ export class S3Mock extends EventEmitter {
             }
             return {};
         });
-        return {promise: async () => {
-            const result = await promise;
-            return result;
-        }};
+        return {promise: async () => await promise};
     }
 
 }
