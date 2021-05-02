@@ -7,7 +7,7 @@
     "homepage": "https://github.com/kei-ito/hexo-deployer-aws-s3",
     "repository": "https://github.com/kei-ito/hexo-deployer-aws-s3",
     "engines": {
-        "node": ">=10"
+        "node": ">=12"
     },
     "main": "lib/index.js",
     "files": [
@@ -41,6 +41,7 @@
         "@nlib/eslint-config": "3.17.21",
         "@nlib/githooks": "0.0.5",
         "@nlib/lint-commit": "0.1.4",
+        "@nlib/nodetool": "0.1.17",
         "@types/glob": "7.1.3",
         "@types/js-yaml": "4.0.1",
         "@types/mime": "2.0.3",
@@ -56,18 +57,6 @@
         "rimraf": "^3.0.2",
         "ts-node": "9.1.1",
         "typescript": "4.2.4"
-    },
-    "ava": {
-        "files": [
-            "lib/**/*.test.js"
-        ],
-        "extensions": [
-            "ts",
-            "js"
-        ],
-        "require": [
-            "ts-node/register"
-        ]
     },
     "lint-staged": {
         "*.js": [
