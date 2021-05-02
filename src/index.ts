@@ -5,40 +5,40 @@ import {S3 as AWSS3} from 'aws-sdk';
 import {S3Mock} from './S3Mock';
 import * as globby from 'globby';
 
-export interface IHexoContext {
-    log: {
-        info: (...args: Array<string | number | {}>) => void,
-    },
-    public_dir: string,
+interface HexoContext {
+    readonly log: {info: (...args: Array<unknown>) => void},
+    readonly public_dir: string,
 }
 
-export interface IHexoDeployment {
-    region: string,
-    prefix: string,
-    bucket: string,
-    glob: globby.GlobbyOptions,
-    test: string,
+interface HexoDeployment {
+    readonly region: string,
+    readonly prefix: string,
+    readonly bucket: string,
+    readonly glob: globby.GlobbyOptions,
+    readonly test: string,
+}
+
+interface HexoDeployer {
+    (this: HexoContext, deploy: HexoDeployment): Promise<void>,
+}
+
+interface HexoDeployerExtender {
+    readonly register: (name: string, deployer: HexoDeployer) => Promise<void>,
+}
+
+interface HexoExtender {
+    readonly deployer: HexoDeployerExtender,
 }
 
 declare global {
     const hexo: {
-        extend: {
-            deployer: {
-                register: (
-                    name: string,
-                    deployer: (
-                        this: IHexoContext,
-                        deploy: IHexoDeployment,
-                    ) => Promise<void>,
-                ) => Promise<void>,
-            },
-        },
+        readonly extend: HexoExtender,
     };
 }
 
 hexo.extend.deployer.register(
     'aws-s3',
-    async function deployer(this: IHexoContext, deploy: IHexoDeployment): Promise<void> {
+    async function deployer(this: HexoContext, deploy: HexoDeployment): Promise<void> {
         const {log, public_dir: publicDir} = this;
         const globPattern = join(publicDir, '**/*');
         const files = await globby(globPattern, {...deploy.glob, onlyFiles: true});
