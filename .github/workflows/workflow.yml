@@ -101,6 +101,7 @@ jobs:
           - ubuntu-latest
         node:
           - 14.x
+    environment: deploy
     steps:
       - run: git config --global core.autocrlf false
       - run: git config --global core.eol lf
