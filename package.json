@@ -18,17 +18,17 @@
         "build:cleanup": "rimraf lib",
         "build:tsc": "tsc",
         "build:sourceMap": "ts-node test/fixSourceMap.ts",
-        "build": "npm-run-all --serial build:cleanup build:tsc build:sourceMap",
+        "build": "run-s build:cleanup build:tsc build:sourceMap",
         "test:setup:cleanup": "rimraf test/project",
         "test:setup:hexo": "hexo init test/project",
         "test:setup:config": "ts-node test/setupConfig.ts",
         "test:setup": "run-s test:setup:cleanup test:setup:hexo test:setup:config",
         "test:core": "ava -v",
-        "test": "npm-run-all --serial test:setup test:core",
+        "test": "run-s test:setup test:core",
         "lint": "eslint --ext .ts src test/*.ts",
-        "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
-        "version:add": "git add .",
-        "version": "npm-run-all --sequential version:changelog version:add"
+        "version": "run-s version:changelog version:add",
+        "version:changelog": "nlib-changelog --output CHANGELOG.md",
+        "version:add": "git add ."
     },
     "dependencies": {
         "@types/glob": "^7.1.1",
