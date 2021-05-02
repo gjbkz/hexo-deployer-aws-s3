@@ -1,7 +1,8 @@
-import * as yaml from 'js-yaml';
-import * as path from 'upath';
 import {promises as afs} from 'fs';
 import * as console from 'console';
+import * as yaml from 'js-yaml';
+import * as path from 'upath';
+import {exec} from '@nlib/nodetool';
 
 const isRecordLike = (input: unknown): input is Record<string, unknown> => typeof input === 'object' && input !== null;
 const projectDirectory = path.join(__dirname, 'project');
@@ -53,10 +54,11 @@ const setupJSON = async (): Promise<void> => {
 };
 
 const installPackage = async (): Promise<void> => {
-    await afs.symlink(
-        path.join(__dirname, '..'),
-        path.join(projectDirectory, 'node_modules', 'hexo-deployer-aws-s3'),
-    );
+    const result = await exec(`npm install ${path.relative(projectDirectory, projectDirectory)}`, {
+        cwd: projectDirectory,
+    });
+    console.info(result.stdout);
+    console.info(result.stderr);
 };
 
 const setup = async (): Promise<void> => {

@@ -1,7 +1,7 @@
 import {promises as afs} from 'fs';
+import * as path from 'upath';
 import test from 'ava';
 import {exec} from '@nlib/nodetool';
-import * as path from 'upath';
 
 const projectRoot = path.join(__dirname, '..');
 const projectDirectory = path.join(projectRoot, 'test/project');
