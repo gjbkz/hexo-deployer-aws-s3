@@ -40,17 +40,16 @@
         "upath": "^2.0.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^11.0.0",
-        "@commitlint/config-conventional": "^11.0.0",
-        "@nlib/lint": "^3.17.1",
+        "@nlib/changelog": "0.1.9",
+        "@nlib/eslint-config": "3.17.21",
+        "@nlib/githooks": "0.0.5",
+        "@nlib/lint-commit": "0.1.4",
         "@types/js-yaml": "^3.12.2",
         "@types/mkdirp": "^1.0.0",
-        "@typescript-eslint/eslint-plugin": "^2.19.2",
-        "@typescript-eslint/parser": "^4.0.0",
+        "@typescript-eslint/eslint-plugin": "4.22.0",
+        "@typescript-eslint/parser": "4.22.0",
         "ava": "^3.3.0",
-        "conventional-changelog-cli": "^2.0.31",
-        "eslint": "^7.0.0",
-        "husky": "^4.2.2",
+        "eslint": "7.25.0",
         "js-yaml": "^3.13.1",
         "lint-staged": "^10.0.7",
         "npm-run-all": "^4.1.5",
@@ -69,60 +68,6 @@
         "require": [
             "ts-node/register"
         ]
-    },
-    "eslintConfig": {
-        "extends": "./node_modules/@nlib/lint/.eslintrc.json",
-        "overrides": [
-            {
-                "files": [
-                    "src/**/*.ts",
-                    "test/**/*.ts"
-                ],
-                "env": {
-                    "es6": true,
-                    "node": true
-                }
-            },
-            {
-                "files": [
-                    "*.test.ts"
-                ],
-                "rules": {
-                    "@typescript-eslint/no-unnecessary-condition": "off"
-                }
-            },
-            {
-                "files": [
-                    "src/index.ts"
-                ],
-                "globals": {
-                    "hexo": true
-                },
-                "rules": {
-                    "no-invalid-this": "off",
-                    "@typescript-eslint/no-floating-promises": "off"
-                }
-            },
-            {
-                "files": [
-                    "test/**/*.ts"
-                ],
-                "parserOptions": {
-                    "project": "test/tsconfig.json"
-                }
-            }
-        ]
-    },
-    "commitlint": {
-        "extends": [
-            "@commitlint/config-conventional"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-commit": "lint-staged"
-        }
     },
     "lint-staged": {
         "*.js": [
