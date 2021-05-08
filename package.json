@@ -11,19 +11,18 @@
     },
     "main": "lib/index.js",
     "files": [
-        "lib/*.js",
-        "lib/*.d.ts"
+        "lib"
     ],
     "scripts": {
+        "build": "run-s build:*",
         "build:cleanup": "rimraf lib",
-        "build:tsc": "tsc",
-        "build": "run-s build:cleanup build:tsc",
+        "build:tsc": "tsc --project tsconfig.build.json",
+        "test": "run-s test:setup test:ava",
+        "test:setup": "run-s test:setup:*",
         "test:setup:cleanup": "rimraf test/project",
         "test:setup:hexo": "hexo init test/project",
         "test:setup:config": "ts-node test/setupConfig.ts",
-        "test:setup": "run-s test:setup:cleanup test:setup:hexo test:setup:config",
-        "test:core": "ava -v",
-        "test": "run-s test:setup test:core",
+        "test:ava": "ava",
         "lint": "eslint --ext .ts src test/*.ts",
         "version": "run-s version:changelog version:add",
         "version:changelog": "nlib-changelog --output CHANGELOG.md",
