@@ -11,33 +11,32 @@
     },
     "main": "lib/index.js",
     "files": [
-        "lib/*.js",
-        "lib/*.d.ts"
+        "lib"
     ],
     "scripts": {
+        "build": "run-s build:*",
         "build:cleanup": "rimraf lib",
-        "build:tsc": "tsc",
-        "build": "run-s build:cleanup build:tsc",
+        "build:tsc": "tsc --project tsconfig.build.json",
+        "test": "run-s test:setup test:ava",
+        "test:setup": "run-s test:setup:*",
         "test:setup:cleanup": "rimraf test/project",
         "test:setup:hexo": "hexo init test/project",
         "test:setup:config": "ts-node test/setupConfig.ts",
-        "test:setup": "run-s test:setup:cleanup test:setup:hexo test:setup:config",
-        "test:core": "ava -v",
-        "test": "run-s test:setup test:core",
+        "test:ava": "ava",
         "lint": "eslint --ext .ts src test/*.ts",
         "version": "run-s version:changelog version:add",
         "version:changelog": "nlib-changelog --output CHANGELOG.md",
         "version:add": "git add ."
     },
     "dependencies": {
-        "aws-sdk": "^2.897.0",
+        "aws-sdk": "2.903.0",
         "globby": "^11.0.3",
         "mime": "^2.5.2",
         "upath": "^2.0.1"
     },
     "devDependencies": {
         "@nlib/changelog": "0.1.9",
-        "@nlib/eslint-config": "3.17.21",
+        "@nlib/eslint-config": "3.17.22",
         "@nlib/githooks": "0.0.5",
         "@nlib/lint-commit": "0.1.4",
         "@nlib/nodetool": "0.1.17",
@@ -49,9 +48,9 @@
         "@typescript-eslint/eslint-plugin": "4.22.1",
         "@typescript-eslint/parser": "4.22.1",
         "ava": "3.15.0",
-        "eslint": "7.25.0",
+        "eslint": "7.26.0",
         "js-yaml": "4.1.0",
-        "lint-staged": "10.5.4",
+        "lint-staged": "11.0.0",
         "npm-run-all": "^4.1.5",
         "rimraf": "^3.0.2",
         "ts-node": "9.1.1",

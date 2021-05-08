@@ -36,9 +36,10 @@ declare global {
     };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 hexo.extend.deployer.register(
     'aws-s3',
-    async function deployer(this: HexoContext, deploy: HexoDeployment): Promise<void> {
+    async function deployer(this: HexoContext, deploy: HexoDeployment) {
         const {log, public_dir: publicDir} = this;
         const globPattern = path.join(publicDir, '**/*');
         const files = await globby(globPattern, {...deploy.glob, onlyFiles: true});
