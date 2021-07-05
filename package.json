@@ -29,7 +29,7 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "aws-sdk": "2.931.0",
+        "aws-sdk": "2.939.0",
         "globby": "^11.0.3",
         "mime": "^2.5.2",
         "upath": "^2.0.1"
