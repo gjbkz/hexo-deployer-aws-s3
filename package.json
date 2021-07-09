@@ -40,7 +40,7 @@
         "@nlib/githooks": "0.0.5",
         "@nlib/lint-commit": "0.1.4",
         "@nlib/nodetool": "0.1.17",
-        "@types/glob": "7.1.3",
+        "@types/glob": "7.1.4",
         "@types/js-yaml": "4.0.1",
         "@types/mime": "2.0.3",
         "@types/mkdirp": "1.0.1",
