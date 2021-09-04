@@ -1,8 +1,8 @@
-import {promises as afs} from 'fs';
+import {exec} from '@nlib/nodetool';
 import * as console from 'console';
+import {promises as afs} from 'fs';
 import * as yaml from 'js-yaml';
 import * as path from 'upath';
-import {exec} from '@nlib/nodetool';
 
 const isRecordLike = (input: unknown): input is Record<string, unknown> => typeof input === 'object' && input !== null;
 const projectDirectory = path.join(__dirname, 'project');
