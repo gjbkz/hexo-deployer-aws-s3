@@ -29,10 +29,10 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "@aws-sdk/client-s3": "^3.29.0",
-        "fast-glob": "^3.2.7",
-        "mime": "^2.5.2",
-        "upath": "^2.0.1"
+        "@aws-sdk/client-s3": "3.29.0",
+        "fast-glob": "3.2.7",
+        "mime": "2.5.2",
+        "upath": "2.0.1"
     },
     "devDependencies": {
         "@nlib/eslint-config": "3.17.24",
@@ -49,8 +49,8 @@
         "eslint": "7.32.0",
         "js-yaml": "4.1.0",
         "lint-staged": "11.1.2",
-        "npm-run-all": "^4.1.5",
-        "rimraf": "^3.0.2",
+        "npm-run-all": "4.1.5",
+        "rimraf": "3.0.2",
         "ts-node": "10.2.1",
         "typescript": "4.4.2"
     },
