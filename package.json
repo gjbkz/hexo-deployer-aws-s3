@@ -37,7 +37,7 @@
     "devDependencies": {
         "@nlib/eslint-config": "3.17.25",
         "@nlib/githooks": "0.1.0",
-        "@nlib/nodetool": "0.4.1",
+        "@nlib/nodetool": "0.4.2",
         "@types/glob": "7.1.4",
         "@types/js-yaml": "4.0.3",
         "@types/mime": "2.0.3",
