@@ -29,7 +29,7 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "@aws-sdk/client-s3": "3.35.0",
+        "@aws-sdk/client-s3": "3.36.0",
         "fast-glob": "3.2.7",
         "mime": "2.5.2",
         "upath": "2.0.1"
