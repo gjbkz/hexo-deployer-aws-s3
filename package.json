@@ -35,7 +35,7 @@
         "upath": "2.0.1"
     },
     "devDependencies": {
-        "@nlib/eslint-config": "3.17.28",
+        "@nlib/eslint-config": "3.17.29",
         "@nlib/githooks": "0.1.0",
         "@nlib/nodetool": "0.4.2",
         "@types/glob": "7.2.0",
