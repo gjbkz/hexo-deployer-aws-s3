@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "@aws-sdk/client-s3": "3.46.0",
-        "fast-glob": "3.2.7",
+        "fast-glob": "3.2.10",
         "mime": "2.6.0",
         "upath": "2.0.1"
     },
