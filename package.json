@@ -31,7 +31,7 @@
     "dependencies": {
         "@aws-sdk/client-s3": "3.46.0",
         "fast-glob": "3.2.11",
-        "mime": "2.6.0",
+        "mime": "3.0.0",
         "upath": "2.0.1"
     },
     "devDependencies": {
