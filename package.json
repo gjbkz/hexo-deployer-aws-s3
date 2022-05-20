@@ -54,6 +54,19 @@
         "ts-node": "10.7.0",
         "typescript": "4.6.4"
     },
+    "ava": {
+        "timeout": "1m",
+        "extensions": [
+            "ts",
+            "js"
+        ],
+        "require": [
+            "ts-node/register"
+        ],
+        "files": [
+            "test/test.ts"
+        ]
+    },
     "lint-staged": {
         "*.ts": [
             "eslint"
