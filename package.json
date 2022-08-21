@@ -24,7 +24,7 @@
         "test:setup:config": "ts-node test/setupConfig.ts",
         "test:ava": "ava",
         "lint": "eslint --ext .ts src test/*.ts",
-        "version": "run-s version:changelog version:add",
+        "version": "run-s version:*",
         "version:changelog": "npx @nlib/changelog --output CHANGELOG.md",
         "version:add": "git add ."
     },
@@ -68,12 +68,7 @@
         ]
     },
     "lint-staged": {
-        "*.ts": [
-            "eslint"
-        ],
-        "*.js": [
-            "eslint"
-        ]
+        "*!(.d).{ts,tsx,js,mjs,cjs,jsx}": "eslint"
     },
     "renovate": {
         "extends": [
