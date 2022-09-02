@@ -44,7 +44,7 @@
         "@types/mkdirp": "1.0.2",
         "@types/node": "18.7.14",
         "@typescript-eslint/eslint-plugin": "5.36.1",
-        "@typescript-eslint/parser": "5.35.1",
+        "@typescript-eslint/parser": "5.36.1",
         "ava": "4.3.3",
         "eslint": "8.23.0",
         "js-yaml": "4.1.0",
