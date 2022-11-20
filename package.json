@@ -42,7 +42,7 @@
         "@types/js-yaml": "4.0.5",
         "@types/mime": "3.0.1",
         "@types/mkdirp": "1.0.2",
-        "@types/node": "18.7.14",
+        "@types/node": "18.11.9",
         "@typescript-eslint/eslint-plugin": "5.36.1",
         "@typescript-eslint/parser": "5.36.1",
         "ava": "4.3.3",
