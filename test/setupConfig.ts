@@ -1,5 +1,5 @@
-import {exec} from '@nlib/nodetool';
 import * as console from 'console';
+import {execSync} from 'child_process';
 import {promises as afs} from 'fs';
 import * as yaml from 'js-yaml';
 import * as path from 'upath';
@@ -53,12 +53,11 @@ const setupJSON = async (): Promise<void> => {
     await afs.writeFile(jsonFilePath, JSON.stringify(config, null, 4));
 };
 
-const installPackage = async (): Promise<void> => {
-    const result = await exec(`npm install ${path.relative(projectDirectory, projectDirectory)}`, {
+const installPackage = () => {
+    const result = execSync(`npm install ${path.relative(projectDirectory, projectDirectory)}`, {
         cwd: projectDirectory,
     });
-    console.info(result.stdout);
-    console.info(result.stderr);
+    console.info(`${result}`);
 };
 
 const setup = async (): Promise<void> => {
@@ -66,7 +65,7 @@ const setup = async (): Promise<void> => {
     await copyFiles();
     await setupYML();
     await setupJSON();
-    await installPackage();
+    installPackage();
 };
 
 if (require.main === module) {

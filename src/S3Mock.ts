@@ -1,7 +1,7 @@
-import type * as S3 from '@aws-sdk/client-s3';
 import {EventEmitter} from 'events';
 import {createWriteStream, promises as afs} from 'fs';
 import {Readable} from 'stream';
+import type * as S3 from '@aws-sdk/client-s3';
 import * as path from 'upath';
 
 const writeFileStream = async (file: string, body: Readable): Promise<void> => {

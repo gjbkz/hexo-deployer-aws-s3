@@ -1,6 +1,6 @@
+import * as fs from 'fs';
 import {S3 as AWSS3} from '@aws-sdk/client-s3';
 import * as fg from 'fast-glob';
-import * as fs from 'fs';
 import * as mime from 'mime';
 import * as path from 'upath';
 import {S3Mock} from './S3Mock';
@@ -48,6 +48,7 @@ hexo.extend.deployer.register(
         log.info(`Found ${files.length} files`);
         const results = await Promise.all(files.map(async (filepath) => {
             const Key = path.toUnix(path.join(deploy.prefix || '', path.relative(publicDir, filepath)));
+            // eslint-disable-next-line import/namespace
             const ContentType = mime.getType(filepath) || undefined;
             await s3.putObject({
                 Bucket: deploy.bucket,

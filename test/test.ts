@@ -1,17 +1,17 @@
-import {exec} from '@nlib/nodetool';
-import test from 'ava';
 import {promises as afs} from 'fs';
+import {execSync} from 'child_process';
+import test from 'ava';
 import * as path from 'upath';
 
 const projectRoot = path.join(__dirname, '..');
 const projectDirectory = path.join(projectRoot, 'test/project');
 
-test.before(async (t) => {
+test.before((t) => {
     const cwd = projectDirectory;
-    const result1 = await exec('npm run generate', {cwd});
-    t.log(result1.stdout, result1.stderr);
-    const result2 = await exec('npm run deploy', {cwd});
-    t.log(result2.stdout, result2.stderr);
+    const result1 = execSync('npm run generate', {cwd});
+    t.log(result1);
+    const result2 = execSync('npm run deploy', {cwd});
+    t.log(result2);
 });
 
 test('compare files', async (t) => {
