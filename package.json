@@ -44,7 +44,7 @@
         "@types/node": "18.19.27",
         "@typescript-eslint/eslint-plugin": "5.48.0",
         "@typescript-eslint/parser": "5.48.0",
-        "ava": "5.1.0",
+        "ava": "5.3.1",
         "eslint": "8.31.0",
         "js-yaml": "4.1.0",
         "lint-staged": "13.1.0",
