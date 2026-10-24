@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Add `acl: none` for S3 buckets with ACLs disabled; keep `public-read` when omitted.
+- Add `concurrency` (default: 8) to bound simultaneous file uploads.
+- Validate deployment settings and stop scheduling new uploads after a failure.
+- Add regression tests for legacy settings, ACLs, binary and empty files, and upload concurrency.
+- Test Hexo 6.3 compatibility alongside Hexo 8 on current Node.js versions.
+
 ## v1.1.1 (2021-09-04)
 
 ### Tests
