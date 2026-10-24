@@ -92,7 +92,7 @@ test.serial('legacy configuration keeps public-read, keys, MIME types and binary
     t.true(fixture.logs.includes('Uploaded 2 files'));
 });
 
-for (const acl of ['none', 'private', 'public-read', 'bucket-owner-full-control']) {
+for (const acl of ['none', 'private', 'public-read', 'bucket-owner-full-control'] as const) {
     test.serial(`acl ${acl} with a prefix and empty file`, async (t) => {
         const fixture = await setup();
         // Preserve the original method with its receiver for restoration.
