@@ -63,7 +63,8 @@
             "ts-node/register"
         ],
         "files": [
-            "test/test.ts"
+            "test/test.ts",
+            "test/unit.ts"
         ]
     },
     "lint-staged": {

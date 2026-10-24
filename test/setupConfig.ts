@@ -49,6 +49,7 @@ const setupJSON = async (): Promise<void> => {
         throw new Error('Invalid dependencies');
     }
     dependencies['hexo-deployer-aws-s3'] = 'file:../..';
+    dependencies.hexo = process.env.HEXO_TEST_VERSION || '6.3.0';
     config.dependencies = dependencies;
     await afs.writeFile(jsonFilePath, JSON.stringify(config, null, 4));
 };

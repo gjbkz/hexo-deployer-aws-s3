@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import {S3 as AWSS3} from '@aws-sdk/client-s3';
+import type {ObjectCannedACL} from '@aws-sdk/client-s3';
 import * as fg from 'fast-glob';
 import * as mime from 'mime';
 import * as path from 'upath';
@@ -16,6 +17,7 @@ interface HexoDeployment {
     readonly bucket: string,
     readonly glob: fg.Options,
     readonly test: string,
+    readonly acl?: string,
 }
 
 interface HexoDeployer {
@@ -40,6 +42,7 @@ declare global {
 hexo.extend.deployer.register(
     'aws-s3',
     async function deployer(this: HexoContext, deploy: HexoDeployment) {
+        const {acl = 'public-read'} = deploy;
         const {log, public_dir: publicDir} = this;
         const globPattern = path.join(publicDir, '**/*');
         const files = await fg(globPattern, {...deploy.glob, onlyFiles: true});
@@ -55,7 +58,7 @@ hexo.extend.deployer.register(
                 Key,
                 Body: fs.createReadStream(filepath),
                 ContentType,
-                ACL: 'public-read',
+                ...(acl === 'none' ? {} : {ACL: acl as ObjectCannedACL}),
             });
             log.info(`Uploaded ${Key} [${ContentType}]`);
         }));
