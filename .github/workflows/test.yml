@@ -2,6 +2,9 @@ name: Test
 on: [push, pull_request]
 permissions:
   contents: read
+env:
+  # CI runs build/test explicitly and does not need developer Git hook installers.
+  npm_config_ignore_scripts: 'true'
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true

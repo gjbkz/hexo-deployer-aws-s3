@@ -26,6 +26,23 @@ interface HexoDeployment {
     readonly concurrency?: number,
 }
 
+const validateDeployment = (deploy: HexoDeployment) => {
+    const {acl = 'public-read', concurrency = 8} = deploy;
+    if (typeof deploy.bucket !== 'string' || !deploy.bucket.trim()) {
+        throw new Error('aws-s3: bucket must be a non-empty string');
+    }
+    if (typeof deploy.region !== 'string' || !deploy.region.trim()) {
+        throw new Error('aws-s3: region must be a non-empty string');
+    }
+    if (!objectACLs.has(acl)) {
+        throw new Error('aws-s3: acl must be none or a supported S3 object ACL');
+    }
+    if (!Number.isSafeInteger(concurrency) || concurrency < 1) {
+        throw new Error('aws-s3: concurrency must be a positive safe integer');
+    }
+    return {acl, concurrency};
+};
+
 interface HexoDeployer {
     (this: HexoContext, deploy: HexoDeployment): Promise<void>,
 }
@@ -48,19 +65,7 @@ declare global {
 hexo.extend.deployer.register(
     'aws-s3',
     async function deployer(this: HexoContext, deploy: HexoDeployment) {
-        const {acl = 'public-read', concurrency = 8} = deploy;
-        if (typeof deploy.bucket !== 'string' || !deploy.bucket.trim()) {
-            throw new Error('aws-s3: bucket must be a non-empty string');
-        }
-        if (typeof deploy.region !== 'string' || !deploy.region.trim()) {
-            throw new Error('aws-s3: region must be a non-empty string');
-        }
-        if (!objectACLs.has(acl)) {
-            throw new Error('aws-s3: acl must be none or a supported S3 object ACL');
-        }
-        if (!Number.isSafeInteger(concurrency) || concurrency < 1) {
-            throw new Error('aws-s3: concurrency must be a positive safe integer');
-        }
+        const {acl, concurrency} = validateDeployment(deploy);
         const {log, public_dir: publicDir} = this;
         const globPattern = path.join(publicDir, '**/*');
         const files = await fg(globPattern, {...deploy.glob, onlyFiles: true});
@@ -69,8 +74,7 @@ hexo.extend.deployer.register(
         log.info(`Found ${files.length} files`);
         let nextFile = 0;
         let uploaded = 0;
-        let failed = false;
-        let failure: unknown;
+        const failures: Array<unknown> = [];
         const upload = async (filepath: string): Promise<void> => {
             const Key = path.toUnix(path.join(deploy.prefix || '', path.relative(publicDir, filepath)));
             // eslint-disable-next-line import/namespace
@@ -94,21 +98,20 @@ hexo.extend.deployer.register(
             uploaded += 1;
         };
         const worker = async (): Promise<void> => {
-            while (!failed && nextFile < files.length) {
+            while (failures.length === 0 && nextFile < files.length) {
                 const filepath = files[nextFile++];
                 try {
                     await upload(filepath);
                 } catch (error) {
-                    if (!failed) {
-                        failed = true;
-                        failure = error;
+                    if (failures.length === 0) {
+                        failures.push(error);
                     }
                 }
             }
         };
         await Promise.all(Array.from({length: Math.min(concurrency, files.length)}, worker));
-        if (failed) {
-            throw failure;
+        if (failures.length > 0) {
+            throw failures[0];
         }
         log.info(`Uploaded ${uploaded} files`);
     },

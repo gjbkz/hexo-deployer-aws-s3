@@ -4,29 +4,41 @@ import {Readable} from 'stream';
 import test from 'ava';
 import type {PutObjectRequest, PutObjectOutput} from '@aws-sdk/client-s3';
 import * as path from 'upath';
+// eslint-disable-next-line import/no-relative-parent-imports
 import {S3Mock} from '../src/S3Mock';
 
-type Deployment = {
+interface Deployment {
     region: string,
     bucket: string,
     test: string,
     prefix?: string,
     acl?: unknown,
     concurrency?: unknown,
-};
-type Context = {public_dir: string, log: {info: (message: string) => void}};
+}
+interface Context {public_dir: string, log: {info: (message: string) => void}}
 type Deployer = (this: Context, deployment: Deployment) => Promise<void>;
-let deployer: Deployer;
+const registration: {deployer?: Deployer} = {};
+const deployer = {
+    call(context: Context, deployment: Deployment): Promise<void> {
+        if (!registration.deployer) {
+            throw new Error('Plugin was not registered');
+        }
+        return registration.deployer.call(context, deployment);
+    },
+};
 Object.assign(global, {hexo: {extend: {deployer: {
     register(name: string, callback: Deployer) {
         if (name !== 'aws-s3') {
             throw new Error(`Unexpected deployer: ${name}`);
         }
-        deployer = callback;
+        registration.deployer = callback;
     },
 }}}});
 // Register the real Hexo plugin; only the S3 transport is replaced below.
-require('../src/index');
+test.before(async () => {
+    // eslint-disable-next-line import/no-relative-parent-imports
+    await import('../src/index');
+});
 
 const setup = async () => {
     const directory = await afs.mkdtemp(path.join(tmpdir(), 'hexo-aws-s3-'));
@@ -49,6 +61,8 @@ const collectBody = async (request: PutObjectRequest): Promise<Buffer> => {
 
 test.serial('legacy configuration keeps public-read, keys, MIME types and binary contents', async (t) => {
     const fixture = await setup();
+    // Preserve the original method with its receiver for restoration.
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const original = S3Mock.prototype.putObject;
     t.teardown(async () => {
         S3Mock.prototype.putObject = original;
@@ -78,6 +92,8 @@ test.serial('legacy configuration keeps public-read, keys, MIME types and binary
 for (const acl of ['none', 'private', 'public-read', 'bucket-owner-full-control']) {
     test.serial(`acl ${acl} with a prefix and empty file`, async (t) => {
         const fixture = await setup();
+        // Preserve the original method with its receiver for restoration.
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         const original = S3Mock.prototype.putObject;
         t.teardown(async () => {
             S3Mock.prototype.putObject = original;
@@ -94,7 +110,7 @@ for (const acl of ['none', 'private', 'public-read', 'bucket-owner-full-control'
         t.is(requests.length, 1);
         t.is(requests[0].Key, 'blog/resources/empty.txt');
         if (acl === 'none') {
-            t.false(Object.prototype.hasOwnProperty.call(requests[0], 'ACL'));
+            t.false(Object.keys(requests[0]).includes('ACL'));
         } else {
             t.is(requests[0].ACL, acl);
         }
@@ -103,15 +119,14 @@ for (const acl of ['none', 'private', 'public-read', 'bucket-owner-full-control'
 
 test.serial('invalid configuration fails before opening files or uploading', async (t) => {
     const fixture = await setup();
+    // Preserve the original method with its receiver for restoration.
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const original = S3Mock.prototype.putObject;
     t.teardown(async () => {
         S3Mock.prototype.putObject = original;
         await afs.rm(fixture.directory, {recursive: true, force: true});
     });
-    S3Mock.prototype.putObject = async () => {
-        t.fail('Invalid configuration must not upload');
-        return {};
-    };
+    S3Mock.prototype.putObject = () => Promise.reject(new Error('Invalid configuration must not upload'));
     for (const invalid of [
         {bucket: ''}, {bucket: ' '}, {region: ''},
         {acl: null}, {acl: ''}, {acl: 'invalid'},
@@ -126,12 +141,14 @@ test.serial('invalid configuration fails before opening files or uploading', asy
 for (const concurrency of [undefined, 1, 3]) {
     test.serial(`upload concurrency is bounded (${String(concurrency)})`, async (t) => {
         const fixture = await setup();
+        // Preserve the original method with its receiver for restoration.
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         const original = S3Mock.prototype.putObject;
         t.teardown(async () => {
             S3Mock.prototype.putObject = original;
             await afs.rm(fixture.directory, {recursive: true, force: true});
         });
-        await Promise.all(Array.from({length: 12}, async (_, i) => afs.writeFile(path.join(fixture.directory, `${i}.txt`), `${i}`)));
+        await Promise.all(Array.from({length: 12}, async (_, i) => await afs.writeFile(path.join(fixture.directory, `${i}.txt`), `${i}`)));
         let active = 0;
         let maximum = 0;
         let completed = 0;
@@ -152,23 +169,29 @@ for (const concurrency of [undefined, 1, 3]) {
 
 test.serial('an upload failure stops new work and waits for in-flight uploads', async (t) => {
     const fixture = await setup();
+    // Preserve the original method with its receiver for restoration.
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     const original = S3Mock.prototype.putObject;
     t.teardown(async () => {
         S3Mock.prototype.putObject = original;
         await afs.rm(fixture.directory, {recursive: true, force: true});
     });
-    await Promise.all(['a.txt', 'b.txt', 'c.txt'].map(async (name) => afs.writeFile(path.join(fixture.directory, name), name)));
+    await Promise.all(['a.txt', 'b.txt', 'c.txt'].map(async (name) => await afs.writeFile(path.join(fixture.directory, name), name)));
     const error = new Error('Access denied');
     let started = 0;
     let finished = 0;
-    let release: () => void = () => {};
-    const gate = new Promise<void>((resolve) => { release = resolve; });
+    let release: (() => void) | undefined;
+    const gate = new Promise<void>((resolve) => {
+        release = resolve;
+    });
     S3Mock.prototype.putObject = async (request): Promise<PutObjectOutput> => {
         started += 1;
         if (started === 1) {
             // Let the other worker start before reporting the first failure.
-            await new Promise<void>((resolve) => setImmediate(resolve));
-            release();
+            await new Promise<void>((resolve) => {
+                setImmediate(resolve);
+            });
+            release?.();
             throw error;
         }
         await gate;
@@ -180,12 +203,12 @@ test.serial('an upload failure stops new work and waits for in-flight uploads', 
     t.is(started, 2);
     t.is(finished, 1);
     t.true(fixture.logs.some((message) => message.startsWith('Failed to upload ')));
-    t.false(fixture.logs.some((message) => /^Uploaded \d+ files$/.test(message)));
+    t.false(fixture.logs.some((message) => (/^Uploaded \d+ files$/).test(message)));
 });
 
 test.serial('an empty directory completes without uploading', async (t) => {
     const fixture = await setup();
-    t.teardown(async () => afs.rm(fixture.directory, {recursive: true, force: true}));
+    t.teardown(async () => await afs.rm(fixture.directory, {recursive: true, force: true}));
     await deployer.call(fixture.context, fixture.deployment);
     t.deepEqual(fixture.logs, ['Found 0 files', 'Uploaded 0 files']);
 });
