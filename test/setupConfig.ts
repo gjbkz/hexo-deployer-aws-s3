@@ -49,7 +49,6 @@ const setupJSON = async (): Promise<void> => {
         throw new Error('Invalid dependencies');
     }
     dependencies['hexo-deployer-aws-s3'] = 'file:../..';
-    // Keep a compatibility fixture for existing Hexo 6.3 sites such as Label Studio.
     dependencies.hexo = process.env.HEXO_TEST_VERSION || '6.3.0';
     config.dependencies = dependencies;
     await afs.writeFile(jsonFilePath, JSON.stringify(config, null, 4));
