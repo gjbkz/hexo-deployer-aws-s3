@@ -26,7 +26,7 @@ const deployer = {
         if (!registration.deployer) {
             throw new Error('Plugin was not registered');
         }
-        return await registration.deployer.call(context, deployment);
+        await registration.deployer.call(context, deployment);
     },
 };
 Object.assign(global, {hexo: {extend: {deployer: {
