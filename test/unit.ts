@@ -15,15 +15,18 @@ interface Deployment {
     acl?: unknown,
     concurrency?: unknown,
 }
-interface Context {public_dir: string, log: {info: (message: string) => void}}
+interface Context {
+    public_dir: string,
+    log: {info: (message: string) => void},
+}
 type Deployer = (this: Context, deployment: Deployment) => Promise<void>;
 const registration: {deployer?: Deployer} = {};
 const deployer = {
-    call(context: Context, deployment: Deployment): Promise<void> {
+    async call(context: Context, deployment: Deployment): Promise<void> {
         if (!registration.deployer) {
             throw new Error('Plugin was not registered');
         }
-        return registration.deployer.call(context, deployment);
+        return await registration.deployer.call(context, deployment);
     },
 };
 Object.assign(global, {hexo: {extend: {deployer: {
@@ -36,7 +39,7 @@ Object.assign(global, {hexo: {extend: {deployer: {
 }}}});
 // Register the real Hexo plugin; only the S3 transport is replaced below.
 test.before(async () => {
-    // eslint-disable-next-line import/no-relative-parent-imports
+    // eslint-disable-next-line import/no-relative-parent-imports, import/dynamic-import-chunkname
     await import('../src/index');
 });
 
@@ -126,7 +129,7 @@ test.serial('invalid configuration fails before opening files or uploading', asy
         S3Mock.prototype.putObject = original;
         await afs.rm(fixture.directory, {recursive: true, force: true});
     });
-    S3Mock.prototype.putObject = () => Promise.reject(new Error('Invalid configuration must not upload'));
+    S3Mock.prototype.putObject = async () => await Promise.reject(new Error('Invalid configuration must not upload'));
     for (const invalid of [
         {bucket: ''}, {bucket: ' '}, {region: ''},
         {acl: null}, {acl: ''}, {acl: 'invalid'},

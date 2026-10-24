@@ -103,9 +103,7 @@ hexo.extend.deployer.register(
                 try {
                     await upload(filepath);
                 } catch (error) {
-                    if (failures.length === 0) {
-                        failures.push(error);
-                    }
+                    failures.push(error);
                 }
             }
         };
