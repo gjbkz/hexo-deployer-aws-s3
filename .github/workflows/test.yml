@@ -24,6 +24,9 @@ jobs:
       - run: npx tsc --noEmit
       - run: npm run lint
   Test:
+    permissions:
+      contents: read
+      id-token: write
     strategy:
       fail-fast: false
       matrix:
@@ -64,4 +67,5 @@ jobs:
         if: matrix.coverage
         with:
           files: coverage/lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
+          fail_ci_if_error: true
