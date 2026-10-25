@@ -63,7 +63,7 @@ jobs:
         if: ${{ !matrix.coverage }}
       - run: npx --yes c8@10.1.3 --reporter=lcov --reporter=text npm test
         if: matrix.coverage
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v7
         if: matrix.coverage
         with:
           files: coverage/lcov.info
