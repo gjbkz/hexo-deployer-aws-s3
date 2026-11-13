@@ -5,7 +5,6 @@ import type {PutObjectRequest} from '@aws-sdk/client-s3';
 import test from 'ava';
 import type {ExecutionContext} from 'ava';
 import * as path from 'upath';
-// eslint-disable-next-line import/no-relative-parent-imports
 import {S3Mock} from '../src/S3Mock';
 
 interface Deployment {
@@ -39,13 +38,11 @@ Object.assign(global, {hexo: {extend: {deployer: {
 }}}});
 // Register the real Hexo plugin; only the S3 transport is replaced below.
 test.before(async () => {
-    // eslint-disable-next-line import/no-relative-parent-imports, import/dynamic-import-chunkname
     await import('../src/index');
 });
 
 const setup = async (t: ExecutionContext) => {
     const directory = await afs.mkdtemp(path.join(tmpdir(), 'hexo-aws-s3-'));
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const original = S3Mock.prototype.putObject;
     t.teardown(async () => {
         S3Mock.prototype.putObject = original;
