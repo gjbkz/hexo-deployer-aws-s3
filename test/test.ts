@@ -1,5 +1,5 @@
-import {promises as afs} from 'fs';
 import {execSync} from 'child_process';
+import {promises as afs} from 'fs';
 import test from 'ava';
 import * as path from 'upath';
 

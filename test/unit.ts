@@ -1,9 +1,9 @@
 import {promises as afs} from 'fs';
 import {tmpdir} from 'os';
 import {Readable} from 'stream';
+import type {PutObjectRequest} from '@aws-sdk/client-s3';
 import test from 'ava';
 import type {ExecutionContext} from 'ava';
-import type {PutObjectRequest} from '@aws-sdk/client-s3';
 import * as path from 'upath';
 // eslint-disable-next-line import/no-relative-parent-imports
 import {S3Mock} from '../src/S3Mock';

@@ -13,16 +13,14 @@ interface HexoContext {
 
 interface HexoDeployment {
     readonly region: string,
-    readonly prefix: string,
+    readonly prefix?: string,
     readonly bucket: string,
     readonly glob: fg.Options,
     readonly test: string,
     readonly acl?: string,
 }
 
-interface HexoDeployer {
-    (this: HexoContext, deploy: HexoDeployment): Promise<void>,
-}
+type HexoDeployer = (this: HexoContext, deploy: HexoDeployment) => Promise<void>;
 
 interface HexoDeployerExtender {
     readonly register: (name: string, deployer: HexoDeployer) => Promise<void>,
@@ -50,9 +48,9 @@ hexo.extend.deployer.register(
         const s3 = deploy.test ? new S3Mock(deploy.test, clientConfig) : new AWSS3(clientConfig);
         log.info(`Found ${files.length} files`);
         const results = await Promise.all(files.map(async (filepath) => {
-            const Key = path.toUnix(path.join(deploy.prefix || '', path.relative(publicDir, filepath)));
+            const Key = path.toUnix(path.join(deploy.prefix ?? '', path.relative(publicDir, filepath)));
             // eslint-disable-next-line import/namespace
-            const ContentType = mime.getType(filepath) || undefined;
+            const ContentType = mime.getType(filepath) ?? undefined;
             await s3.putObject({
                 Bucket: deploy.bucket,
                 Key,
