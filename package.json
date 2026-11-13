@@ -23,7 +23,7 @@
         "test:setup:hexo": "hexo init test/project",
         "test:setup:config": "ts-node test/setupConfig.ts",
         "test:ava": "ava",
-        "lint": "eslint --ext .ts src test/*.ts",
+        "lint": "biome lint src test",
         "version": "run-s version:*",
         "version:changelog": "npx @nlib/changelog --output CHANGELOG.md",
         "version:add": "git add ."
@@ -35,17 +35,14 @@
         "upath": "2.0.1"
     },
     "devDependencies": {
-        "@nlib/eslint-config": "3.20.5",
+        "@biomejs/biome": "2.6.7",
         "@nlib/githooks": "0.2.2",
         "@types/glob": "8.1.0",
         "@types/js-yaml": "4.0.9",
         "@types/mime": "3.0.4",
         "@types/mkdirp": "1.0.2",
         "@types/node": "22.20.5",
-        "@typescript-eslint/eslint-plugin": "6.19.0",
-        "@typescript-eslint/parser": "6.19.0",
         "ava": "5.3.1",
-        "eslint": "8.57.1",
         "js-yaml": "5.5.0",
         "lint-staged": "17.6.0",
         "npm-run-all": "4.1.5",
@@ -68,14 +65,11 @@
         ]
     },
     "lint-staged": {
-        "*!(.d).{ts,tsx,js,mjs,cjs,jsx}": "eslint"
+        "*!(.d).{ts,tsx,js,mjs,cjs,jsx}": "biome lint --no-errors-on-unmatched"
     },
     "renovate": {
         "extends": [
             "github>nlibjs/renovate-config"
         ]
-    },
-    "overrides": {
-        "eslint-plugin-import": "2.32.0"
     }
 }

@@ -36,7 +36,6 @@ declare global {
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 hexo.extend.deployer.register(
     'aws-s3',
     async function deployer(this: HexoContext, deploy: HexoDeployment) {
@@ -49,7 +48,6 @@ hexo.extend.deployer.register(
         log.info(`Found ${files.length} files`);
         const results = await Promise.all(files.map(async (filepath) => {
             const Key = path.toUnix(path.join(deploy.prefix ?? '', path.relative(publicDir, filepath)));
-            // eslint-disable-next-line import/namespace
             const ContentType = mime.getType(filepath) ?? undefined;
             await s3.putObject({
                 Bucket: deploy.bucket,
