@@ -1,5 +1,5 @@
-import * as console from 'console';
 import {execSync} from 'child_process';
+import * as console from 'console';
 import {promises as afs} from 'fs';
 import * as yaml from 'js-yaml';
 import * as path from 'upath';
@@ -49,7 +49,8 @@ const setupJSON = async (): Promise<void> => {
         throw new Error('Invalid dependencies');
     }
     dependencies['hexo-deployer-aws-s3'] = 'file:../..';
-    dependencies.hexo = process.env.HEXO_TEST_VERSION || '6.3.0';
+    const version = process.env.HEXO_TEST_VERSION;
+    dependencies.hexo = version === undefined || version === '' ? '6.3.0' : version;
     config.dependencies = dependencies;
     await afs.writeFile(jsonFilePath, JSON.stringify(config, null, 4));
 };
