@@ -5,7 +5,7 @@ import type * as S3 from '@aws-sdk/client-s3';
 import * as path from 'upath';
 
 const writeFileStream = async (file: string, body: Readable): Promise<void> => {
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
         body.pipe(createWriteStream(file))
         .once('error', reject)
         .once('finish', resolve);
