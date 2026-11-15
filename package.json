@@ -37,7 +37,7 @@
     "devDependencies": {
         "@biomejs/biome": "2.6.7",
         "@nlib/githooks": "0.2.2",
-        "@types/glob": "8.1.0",
+        "@types/glob": "9.0.0",
         "@types/js-yaml": "4.0.9",
         "@types/mime": "3.0.4",
         "@types/mkdirp": "1.0.2",
