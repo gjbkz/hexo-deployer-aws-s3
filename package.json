@@ -29,13 +29,13 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "@aws-sdk/client-s3": "3.1167.0",
+        "@aws-sdk/client-s3": "3.1173.0",
         "fast-glob": "3.3.3",
         "mime": "3.0.0",
         "upath": "2.0.1"
     },
     "devDependencies": {
-        "@biomejs/biome": "2.6.7",
+        "@biomejs/biome": "2.6.8",
         "@nlib/githooks": "0.2.2",
         "@types/glob": "8.1.0",
         "@types/js-yaml": "4.0.9",
@@ -44,7 +44,7 @@
         "@types/node": "22.20.5",
         "ava": "5.3.1",
         "js-yaml": "5.5.0",
-        "lint-staged": "17.6.0",
+        "lint-staged": "17.6.1",
         "npm-run-all": "4.1.5",
         "rimraf": "3.0.2",
         "ts-node": "10.9.2",
